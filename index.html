@@ -7,13 +7,14 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
     <link rel="shortcut icon" href="assets/favicons/favicon.ico">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <script src="https://unpkg.com/ag-grid-enterprise@18.0.1/dist/ag-grid-enterprise.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
     <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
     <script src="grid-performance.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 </head>
 <body>
 <section class="head">
@@ -23,7 +24,7 @@
         <div>
             <h3>Trusted by the Community</h3>
             <!--todo-->
-            <ul style="padding-left: 120px;">
+            <ul style="padding-left: 163px;">
                 <li>Over <strong>150,000</strong> downloads per month</li>
                 <li>Over <strong>2 million</strong> total downloads</li>
             </ul>
@@ -31,7 +32,7 @@
         <div>
             <h3>Built for Enterprise</h3>
             <!--todo-->
-            <ul style="padding-left: 74px; border-left: 1px solid #fff;">
+            <ul style="padding-left: 114px">
                 <li>Over <strong>1,500</strong> Companies use ag-Grid Enterprise</li>
                 <li>Over <strong>25%</strong> of the Fortune 500 use ag-Grid Enterprise</li>
             </ul>
@@ -85,42 +86,45 @@
         <a class="btn btn-primary" href="https://www.ag-grid.com/features-overview">Discover all features</a>
     </div>
 </section>
-<section class="performance">
+<!--make all sections with padding-->
+<section class="performance" style="padding: 20px 0 75px;">
     <h2>Delivers performance you expect</h2>
     <!--make container with dimensions for all sections-->
-    <div class="container" style="width: 800px; margin: 0 auto;">
-        <p class="centered">
-            Out of the box, Ag-Grid is designed to perform smoothly with millions of records. No specific configuration
-            required.
-            ag-Grid is designed to be performant with large amounts of data. To stress-test the demo,
-            select
-            '100,000 rows' from the Data dropdown.The react grid in the demo below renders 10 000 records in the react
-            grid
-            with 25 columns.
-            ag-Grid can process over 150,000 updates per second. Together with the latest browsers and ag-Grid’s
-            cutting-edge algorithms, let me introduce you to the fastest JavaScript datagrid in the world.
-            ag-Grid can handle the performance required by modern day enterprise applications
-        </p>
-        <div class="grid-example">
-            <div id="example-toolbar">
-                <div>
+    <div class="container">
+        <div>
+            <h4>It's ridiculously fast</h4>
+            <p style="line-height: 25px; margin: 15px 0;">
+                Out of the box, Ag-Grid is designed to perform smoothly with millions of records. No specific
+                configuration required. ag-Grid is designed to be performant with large amounts of data. To stress-test
+                the demo,
+                select '100,000 rows' from the Data dropdown.The react grid in the demo below renders 10 000 records in
+                the react grid with 25 columns.
+            </p>
+            <h4>And it gets even better</h4>
+            <p style="line-height: 25px; margin: 15px 0;">
+                ag-Grid can process over 150,000 updates per second. Together with the latest browsers and ag-Grid’s
+                cutting-edge algorithms, let me introduce you to the fastest JavaScript datagrid in the world.
+                ag-Grid can handle the performance required by modern day enterprise applications
+            </p>
+        </div>
+        <div>
+            <div class="grid-example">
+                <div class="example-toolbar">
                     <div>
-                        <span>Data Size:</span>
-                        <select onchange="onDataSizeChanged(this.value)" id="data-size" style="color: #333;">
+                        <label for="data-size">Data Size:</label>
+                        <select onchange="onDataSizeChanged(this.value)" id="data-size">
                             <option value=".1x22">100 Rows, 22 Cols</option>
                             <option value="1x22">1,000 Rows, 22 Cols</option>
                             <option value="10x100">10,000 Rows, 100 Cols</option>
                             <option value="100x22">100,000 Rows, 22 Cols</option>
                         </select>
-
                         <span id="message" style="margin-left: 10px; display: none;">
-                <i class="fa fa-spinner fa-pulse fa-fw margin-bottom">spinner</i>
-            </span>
+                            <i class="fas fa-spinner fa-pulse fa-fw"></i>
+                        </span>
                     </div>
                     <div>
-                        <span class="hide-when-small">Theme:</span>
-
-                        <select onchange="onThemeChanged(this.value)" style="width: 90px; color: #333;" id="grid-theme" class="hide-when-small">
+                        <label for="grid-theme">Theme:</label>
+                        <select onchange="onThemeChanged(this.value)" id="grid-theme">
                             <option value="">-none-</option>
                             <option value="ag-theme-balham" selected>Balham</option>
                             <option value="ag-theme-balham-dark">Balham (dark)</option>
@@ -128,15 +132,13 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div id="search-toolbar">
-                <div class="row">
-                    <label for="global-filter" style="margin-right: 1rem; transform:translatey(5px);">Filter:</label>
-                    <input placeholder="Type text from any column..." type="text" oninput="onFilterChanged(this.value)" ondblclick="filterDoubleClicked(event)" class="hide-when-small" id="global-filter" style="flex: 1">
+                <div class="search-toolbar" style="display: flex;">
+                    <label for="global-filter" style="margin: 0 10px 0 0;">Filter:</label>
+                    <input placeholder="Type text from any column..." type="text" oninput="onFilterChanged(this.value)" ondblclick="filterDoubleClicked(event)" id="global-filter" style="flex-grow: 1;">
                 </div>
+                <span id="messageText"></span>
+                <div class="grid-container" style="height:500px;"></div>
             </div>
-            <span id="messageText"></span>
-            <div class="grid-container" style="height:500px;"></div>
         </div>
     </div>
 </section>
@@ -148,14 +150,16 @@
         <a class="btn btn-primary" href="https://www.ag-grid.com/example.php">Play with it</a>
     </div>
 </section>
-<section class="closing-argument">
-    <h2>Ready to give it a try?</h2>
-    <div class="btn-wrapper">
-        <a class="btn btn-primary" href="https://www.ag-grid.com/react-getting-started">Get started in 5 minutes</a>
-    </div>
-</section>
 <section>
-    <img src="assets/conclusion.jpg" style="display: block;margin: 0 auto;">
+    <h2>We built the largest community of SEOs and brought radical transparency to the industry.</h2>
+</section>
+<section class="closing-argument">
+    <div class="container">
+        <h3>Community Edition is <strong>free</strong>. Forever. Ready to give it a try?</h3>
+        <div class="btn-wrapper">
+            <a class="btn btn-primary" href="https://www.ag-grid.com/react-getting-started">Get started in 5 minutes</a>
+        </div>
+    </div>
 </section>
 <footer>
     <div>Github stars/stats and Twitter account</div>

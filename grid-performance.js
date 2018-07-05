@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     new agGrid.Grid(gridDiv, gridOptions);
     createData();
 
-    gridDiv.className = 'ag-theme-balham';
+    gridDiv.className = 'ag-theme-balham-dark';
 });
 
 var gridDiv;
