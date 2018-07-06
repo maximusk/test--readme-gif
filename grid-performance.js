@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     gridDiv = document.querySelector('.performance .grid-container');
 
-
     new agGrid.Grid(gridDiv, gridOptions);
     createData();
 

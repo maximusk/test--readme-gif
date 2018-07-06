@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
     <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
     <script src="grid-performance.js"></script>
+    <script src="grid-api.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -20,11 +21,11 @@
 <section class="head">
     <div class="logo"><a href="/" title="The Best HTML 5 Grid in the World">ag-Grid</a></div>
     <h1>The best React Grid in the world</h1>
-    <div class="container">
+    <div class="container" style="width: 1000px;">
         <div>
             <h3>Trusted by the Community</h3>
             <!--todo-->
-            <ul style="padding-left: 163px;">
+            <ul style="padding-left: 112px;">
                 <li>Over <strong>150,000</strong> downloads per month</li>
                 <li>Over <strong>2 million</strong> total downloads</li>
             </ul>
@@ -32,14 +33,15 @@
         <div>
             <h3>Built for Enterprise</h3>
             <!--todo-->
-            <ul style="padding-left: 114px">
+            <ul style="padding-left: 82px">
                 <li>Over <strong>1,500</strong> Companies use ag-Grid Enterprise</li>
                 <li>Over <strong>25%</strong> of the Fortune 500 use ag-Grid Enterprise</li>
             </ul>
         </div>
     </div>
     <div class="btn-wrapper">
-        <a class="btn btn-primary" href="https://www.ag-grid.com/react-getting-started">Get started in 5 minutes</a>
+        <a class="btn btn-primary btn-alt" href="https://www.ag-grid.com/react-getting-started">Get started in 5
+            minutes</a>
     </div>
 </section>
 <section class="features">
@@ -125,9 +127,8 @@
                     <div>
                         <label for="grid-theme">Theme:</label>
                         <select onchange="onThemeChanged(this.value)" id="grid-theme">
-                            <option value="">-none-</option>
-                            <option value="ag-theme-balham" selected>Balham</option>
-                            <option value="ag-theme-balham-dark">Balham (dark)</option>
+                            <option value="ag-theme-balham">Balham</option>
+                            <option value="ag-theme-balham-dark" selected>Balham (dark)</option>
                             <option value="ag-theme-material">Material</option>
                         </select>
                     </div>
@@ -142,29 +143,71 @@
         </div>
     </div>
 </section>
-<section class="api">
+<section class="api" style="padding-bottom: 50px;">
     <h2>Easy to use with developer friendly API</h2>
-    <p class="centered">The react grid in the demo below shows a few API methods that...</p>
-    <img src="assets/developer-friendly-api.jpg" style="display: block;margin: 0 auto;">
-    <div class="btn-wrapper">
-        <a class="btn btn-primary" href="https://www.ag-grid.com/example.php">Play with it</a>
+    <div class="container">
+        <div>
+            <div class="grid-container ag-theme-balham-dark" style="height: 100%;"></div>
+        </div>
+        <div>
+            <h4>Say something about API</h4>
+            <p style="line-height: 25px; margin: 15px 0; ">
+                ag-Grid can process over 150,000 updates per second. Together with the latest browsers and ag-Grid’s
+                cutting-edge algorithms.
+            </p>
+            <div class="api-code" style="padding: 20px; background: #f8f8f8; display: flex;  align-items: center; min-height: 50px; border: 1px solid #e3e2e2;">
+                <code style="font-size: 15px;"></code>
+            </div>
+            <h4>Click operation to see API in action:</h4>
+            <ul class="api-operations">
+                <li><a onclick="callGridApi('api.setSort(country)')">Sort by Country</a></li>
+                <li><a onclick="callGridApi('api.setSort(country, year)')">Sort by Country & Year</a></li>
+                <li><a onclick="callGridApi('api.setFilter(Ireland)')">Filter by Ireland</a></li>
+                <li><a onclick="callGridApi('api.setSort(year)')">Sort by Year</a></li>
+                <li><a onclick="callGridApi('api.clearFilterAndSort()')">Clear filtering and sorting</a></li>
+                <li><a onclick="callGridApi('api.setGrouping(country, year, sport)')">
+                    Group by Country, Year & Sport</a>
+                </li>
+                <li><a onclick="callGridApi('api.moveColumns(gold, silver, bronze, total)')">Move columns</a></li>
+                <li><a onclick="callGridApi('rowNode.setExpanded(true)')">Expand rows</a></li>
+                <li><a onclick="callGridApi('rowNode.setExpanded(false)')">Collapse rows</a></li>
+                <li><a onclick="callGridApi('api.removeGrouping()')">Remove grouping</a></li>
+                <li><a onclick="callGridApi('api.moveColumns(gold, silver, bronze, total)')">Move columns</a></li>
+                <li><a onclick="callGridApi('rowNode.setRowHeight(100)')">Set row height</a></li>
+                <li><a onclick="callGridApi('api.resetRowHeights()')">Reset row height to default</a></li>
+            </ul>
+        </div>
     </div>
-</section>
-<section>
-    <h2>We built the largest community of SEOs and brought radical transparency to the industry.</h2>
 </section>
 <section class="closing-argument">
     <div class="container">
-        <h3>Community Edition is <strong>free</strong>. Forever. Ready to give it a try?</h3>
-        <div class="btn-wrapper">
-            <a class="btn btn-primary" href="https://www.ag-grid.com/react-getting-started">Get started in 5 minutes</a>
+        <h2 style="background: none; color: white; width: 800px; margin: 0 auto; font-weight: 500;">
+            Community Edition is free. Forever. <br> Ready to give it a try?
+        </h2>
+        <div class="btn-wrapper" style="padding-top: 0;">
+            <a class="btn btn-primary btn-alt" href="https://www.ag-grid.com/react-getting-started">Get started in 5
+                minutes</a>
         </div>
     </div>
 </section>
 <footer>
-    <div>Github stars/stats and Twitter account</div>
-    <span>ag-Grid Limited registered in the United Kingdom. Company No. 07318192.</span>
-    <span>© ag-Grid Ltd. 2015-2018</span>
+    <div>
+        <ul style="display: flex; list-style: none; margin-bottom: 10px;">
+            <li>
+                <a class="github-button" href="https://github.com/ag-grid/ag-grid" data-show-count="true" aria-label="Star ag-grid/ag-grid on GitHub">Star</a>
+            </li>
+            <li style="margin-left: 15px">
+                <a href="https://twitter.com/ceolter?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow
+                    @ceolter</a></li>
+        </ul>
+    </div>
+    <div class="copy">
+        <span>ag-Grid Limited registered in the United Kingdom. Company No. 07318192.</span>
+        <span>&copy; ag-Grid Ltd. 2015-2018</span>
+    </div>
 </footer>
+
+<script async defer src="https://platform.twitter.com/widgets.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>

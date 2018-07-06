@@ -69,8 +69,8 @@ h2 {
 }
 
 h3 {
-    font-size: 25px;
-    margin: 20px 0;
+    font-size: 30px;
+    padding: 20px 0;
 }
 
 h4 {
@@ -129,6 +129,26 @@ h4 {
     margin: 15px auto;
 }
 
+.api .container {
+    display: grid;
+    grid-template-columns: auto 400px;
+    column-gap: 50px;
+    margin: 0 auto;
+}
+
+.api-operations {
+    list-style: none;
+}
+
+.api-operations li {
+    cursor: pointer;
+    line-height: 25px;
+}
+
+.api-operations li:hover {
+    color: rgb(0, 119, 179);
+}
+
 .closing-argument {
     background: linear-gradient(to top left, #0084e7, #00407f);
 }
@@ -138,9 +158,29 @@ h4 {
     color: white;
 }
 
+footer {
+    padding: 30px 100px;
+    background: rgb(240, 247, 247);
+    border-top: 2px solid rgb(221, 232, 232);
+    color: #5d6769;
+}
+
+footer .copy {
+    display: flex;
+}
+
+footer .copy span {
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+footer .copy span:nth-child(2) {
+    text-align: right;
+}
+
 .btn-wrapper {
     text-align: center;
-    margin: 40px 0;
+    padding: 40px 0;
 }
 
 .btn {
@@ -171,6 +211,14 @@ h4 {
     color: #0084e7;
     border-color: #0887d7;
     background-color: transparent;
+}
+
+.btn-alt {
+    color: white;
+}
+
+.btn-alt:hover {
+    color: white;
 }
 
 /* -------------- Utility classes ------------ */
