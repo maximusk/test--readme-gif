@@ -1,199 +1,157 @@
-var eTitle;
-var eCountdown;
-var countDownDirection = true;
+let api;
+let columnApi;
 
-function callGridApi(code) {
-    const block = document.querySelector('.api code');
-    block.textContent = code;
-}
-
-var columnDefs = [
+let columnDefs = [
     {headerName: 'Athlete', field: 'athlete', width: 150},
     {headerName: 'Age', field: 'age', width: 90},
     {headerName: 'Country', field: 'country', width: 120},
     {headerName: 'Year', field: 'year', width: 90},
-    {headerName: 'Date', field: 'date', width: 110},
     {headerName: 'Sport', field: 'sport', width: 110},
-    {headerName: 'Gold', field: 'gold', width: 100, aggFunc: 'sum'},
-    {headerName: 'Silver', field: 'silver', width: 100, aggFunc: 'sum'},
-    {headerName: 'Bronze', field: 'bronze', width: 100, aggFunc: 'sum'},
-    {headerName: 'Total', field: 'total', width: 100, aggFunc: 'sum'}
+    {headerName: 'Gold', field: 'gold', width: 100, aggFunc: 'sum'}
 ];
 
-var gridOptions1 = {
+let gridOptions = {
     columnDefs: columnDefs,
     enableRangeSelection: true,
     enableSorting: true,
     enableFilter: true,
     animateRows: true,
-    suppressAggFuncInHeader: true, // so we don't see sum() in gold, silver and bronze headers
-    autoGroupColumnDef: {
-        // to get 'athlete' showing in the leaf level in this column
-        cellRenderer: 'agGroupCellRenderer',
-        headerName: 'Athlete',
-        field: 'athlete'
+
+    // so we don't see sum() in aggregate column headers
+    suppressAggFuncInHeader: true
+};
+
+function callGridApi(action, placeholder) {
+    placeholder.textContent = action.code;
+    action.fn();
+}
+
+const actions = {
+    'sort-by-one-column': {
+        code: 'api.setSortModel([\n' +
+        '    {colId: \'country\', sort: \'asc\'}\n' +
+        ']);',
+        fn() {
+            api.setSortModel([{colId: 'country', sort: 'asc'}]);
+        }
+    },
+    'sort-by-two-columns': {
+        code: 'api.setSortModel([\n' +
+        '    {colId: \'country\', sort: \'asc\'},\n' +
+        '    {colId: \'year\', sort: \'asc\'}\n' +
+        ']);',
+        fn() {
+            api.setSortModel([{colId: 'country', sort: 'asc'}, {colId: 'year', sort: 'asc'}]);
+        }
+    },
+    'clear-sorting': {
+        code: 'api.setSortModel([]);',
+        fn() {
+            api.setSortModel([]);
+        }
+    },
+    'set-filter-by-one-column': {
+        code: 'api.setFilterModel({country: [\'United States\']});',
+        fn() {
+            api.setFilterModel({country: ['United States']});
+        }
+    },
+    'remove-filter': {
+        code: 'api.setFilterModel({});',
+        fn() {
+            api.setFilterModel({});
+        }
+    },
+    'group-by-three-columns': {
+        code: 'columnApi.setRowGroupColumns(\n' +
+        '    [\'country\', \'year\', \'sport\']\n' +
+        ');',
+        fn() {
+            columnApi.setRowGroupColumns(['country', 'year', 'sport']);
+        }
+    },
+    'expand-top-level-rows': {
+        code: 'api.forEachNode(function (node) {\n' +
+        '    if (node.level === 0) {\n' +
+        '        node.setExpanded(true);\n' +
+        '    }\n' +
+        '});',
+        fn() {
+            api.forEachNode(function (node) {
+                if (node.level === 0) {
+                    node.setExpanded(true);
+                }
+            });
+        }
+    },
+    'collapse-top-level-rows': {
+        code: 'api.forEachNode(function (node) {\n' +
+        '    if (node.level === 0) {\n' +
+        '        node.setExpanded(false);\n' +
+        '    }\n' +
+        '});',
+        fn() {
+            api.forEachNode(function (node) {
+                if (node.level === 0) {
+                    node.setExpanded(false);
+                }
+            });
+        }
+    },
+    'remove-grouping': {
+        code: 'columnApi.setRowGroupColumns([]);',
+        fn() {
+            columnApi.setRowGroupColumns([]);
+        }
+    },
+    'set-row-height': {
+        code: 'const rowNode = api.getDisplayedRowAtIndex(3);\n' +
+        'rowNode.setRowHeight(100);\n' +
+        'api.onRowHeightChanged();',
+        fn() {
+            const rowNode = api.getDisplayedRowAtIndex(3);
+            rowNode.setRowHeight(100);
+            api.onRowHeightChanged();
+        }
+    },
+    'reset-row-height': {
+        code: 'api.resetRowHeights();',
+        fn() {
+            api.resetRowHeights();
+        }
     }
 };
 
-// the code below executes an action every 2,000 milliseconds.
-// it's an interval, and each time it runs, it takes the next action
-// from the 'actions' list below
-function startInterval(api, columnApi) {
-    var actionIndex = 0;
+document.addEventListener('DOMContentLoaded', () => {
+    // initialize the grid
+    new agGrid.Grid(document.querySelector('.api .grid-container'), gridOptions);
+    api = gridOptions.api;
+    columnApi = gridOptions.columnApi;
 
-    resetCountdown();
-    executeAfterXSeconds();
+    // feed data into the grid
+    agGrid.simpleHttpRequest({url: 'https://raw.githubusercontent.com/ag-grid/ag-grid-docs/master/src/olympicWinnersSmall.json'})
+        .then(function (data) {
+            gridOptions.api.setRowData(data.slice(0, 1000));
+            setTimeout(function () {
+                gridOptions.api.sizeColumnsToFit();
+            }, 0);
+        });
 
-    function executeAfterXSeconds() {
-        setTimeout(function () {
-            var action = actions[actionIndex];
-            action(api, columnApi);
-            actionIndex++;
-            if (actionIndex >= actions.length) {
-                actionIndex = 0;
-            }
-            resetCountdown();
-            executeAfterXSeconds();
-        }, 3000);
+    // set up action listeners
+    const placeholder = document.querySelector('.api-code > pre');
+    const actionNodes = [];
+    for (let action in actions) {
+        const node = document.querySelector(`[data-action="${action}"]`);
+        actionNodes.push(node);
+        node.addEventListener('click', () => {
+            actionNodes.forEach((n) => {
+                n.classList.remove('active');
+            });
+            node.classList.add('active');
+            callGridApi(actions[action], placeholder)
+        });
     }
 
-    setTitleFormatted(null);
-}
-
-function resetCountdown() {
-    eCountdown.style.width = countDownDirection ? '100%' : '0%';
-    countDownDirection = !countDownDirection;
-}
-
-function setTitleFormatted(apiName, methodName, paramsName) {
-    var html;
-    if (apiName === null) {
-        html = '<span class="code-highlight-yellow">aggrid/:> </span>';
-    } else {
-        html =
-            '<span class="code-highlight-yellow">aggrid/:> </span> ' +
-            '<span class="code-highlight-blue">' +
-            apiName +
-            '</span>' +
-            '<span class="code-highlight-blue">.</span>' +
-            '<span class="code-highlight-yellow">' +
-            methodName +
-            '</span>' +
-            '<span class="code-highlight-blue"></span>' +
-            '<span class="code-highlight-blue">(</span>' +
-            '<span class="code-highlight-green">' +
-            paramsName +
-            '</span>' +
-            '<span class="code-highlight-blue">)</span>';
-    }
-    eTitle.innerHTML = html;
-}
-
-var actions = [
-    function (api) {
-        api.setSortModel([{colId: 'country', sort: 'asc'}]);
-        setTitleFormatted('api', 'setSort', 'country');
-    },
-    function (api) {
-        api.setSortModel([{colId: 'country', sort: 'asc'}, {colId: 'year', sort: 'asc'}]);
-        setTitleFormatted('api', 'setSort', 'country, year');
-    },
-    function (api) {
-        api.setSortModel([{colId: 'country', sort: 'asc'}, {colId: 'year', sort: 'desc'}]);
-        setTitleFormatted('api', 'setSort', 'country, year');
-    },
-    function (api) {
-        api.setSortModel([{colId: 'country', sort: 'asc'}]);
-        setTitleFormatted('api', 'setSort', 'country');
-    },
-    function (api) {
-        api.setSortModel([]);
-        api.setFilterModel({country: ['Ireland']});
-        setTitleFormatted('api', 'setFilter', 'Ireland');
-    },
-    function (api) {
-        api.setSortModel([{colId: 'year', sort: 'asc'}]);
-        setTitleFormatted('api', 'setSort', 'year');
-    },
-    function (api) {
-        api.setSortModel([{colId: 'year', sort: 'desc'}]);
-        setTitleFormatted('api', 'setSort', 'year');
-    },
-    function (api) {
-        api.setSortModel([]);
-        api.setFilterModel({});
-        setTitleFormatted('api', 'clearFilterAndSort', '');
-    },
-    function (api, columnApi) {
-        columnApi.setRowGroupColumns(['country', 'year', 'sport']);
-        columnApi.setColumnVisible('athlete', false);
-        api.sizeColumnsToFit();
-        setTitleFormatted('api', 'setGrouping', 'country, year, sport');
-    },
-    function (api, columnApi) {
-        columnApi.moveColumns(['gold', 'silver', 'bronze', 'total'], 1);
-        api.sizeColumnsToFit();
-        setTitleFormatted('api', 'moveColumns', 'gold, silver, bronze, total');
-    },
-    function (api) {
-        var topLevelNodes = api.getModel().getTopLevelNodes();
-        topLevelNodes[2].setExpanded(true);
-        setTitleFormatted('rowNode', 'setExpanded', 'true');
-    },
-    function (api) {
-        var topLevelNodes = api.getModel().getTopLevelNodes();
-        topLevelNodes[2].childrenAfterSort[1].setExpanded(true);
-        setTitleFormatted('rowNode', 'setExpanded', 'true');
-    },
-    function (api) {
-        var topLevelNodes = api.getModel().getTopLevelNodes();
-        topLevelNodes[2].childrenAfterSort[1].childrenAfterSort[0].setExpanded(true);
-        setTitleFormatted('rowNode', 'setExpanded', 'true');
-    },
-    function (api) {
-        var topLevelNodes = api.getModel().getTopLevelNodes();
-        topLevelNodes[2].childrenAfterSort[1].setExpanded(false);
-        setTitleFormatted('rowNode', 'setExpanded', 'false');
-    },
-    function (api, columnApi) {
-        columnApi.setRowGroupColumns([]);
-        columnApi.setColumnVisible('athlete', true);
-        api.sizeColumnsToFit();
-        setTitleFormatted('api', 'removeGrouping', '');
-    },
-    function (api, columnApi) {
-        columnApi.moveColumns(['gold', 'silver', 'bronze', 'total'], 6);
-        setTitleFormatted('api', 'moveColumns', 'gold, silver, bronze, total');
-    },
-    function (api) {
-        api
-            .getModel()
-            .getRow(3)
-            .setRowHeight(100);
-        api.onRowHeightChanged();
-        setTitleFormatted('rowNode', 'setRowHeight', '100');
-    },
-    function (api) {
-        api.resetRowHeights();
-        setTitleFormatted('api', 'resetRowHeights', '');
-    }
-];
-
-document.addEventListener('DOMContentLoaded', initApiGrid);
-
-function initApiGrid() {
-    const gridDiv = document.querySelector('.api .grid-container');
-
-    new agGrid.Grid(gridDiv, gridOptions1);
-
-    agGrid.simpleHttpRequest({url: 'https://raw.githubusercontent.com/ag-grid/ag-grid-docs/master/src/olympicWinnersSmall.json'}).then(function (data) {
-        gridOptions1.api.setRowData(data);
-        setTimeout(function () {
-            gridOptions1.api.sizeColumnsToFit();
-        }, 1000);
-
-        eTitle = document.querySelector('#animationAction');
-        eCountdown = document.querySelector('#animationCountdown');
-        startInterval(gridOptions1.api, gridOptions1.columnApi);
-    });
-}
+    actionNodes[0].classList.add('active');
+    callGridApi(actions['sort-by-one-column'], placeholder);
+});

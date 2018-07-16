@@ -4,13 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
     new agGrid.Grid(gridDiv, gridOptions);
     createData();
 
-    gridDiv.className = 'ag-theme-balham-dark';
+    gridDiv.className = 'ag-theme-balham';
 });
 
-var gridDiv;
-var colNames = ['Station', 'Railway', 'Street', 'Address', 'Toy', 'Soft Box', 'Make and Model', 'Longest Day', 'Shortest Night'];
+let gridDiv;
 
-var countries = [
+const countries = [
     {country: 'Ireland', continent: 'Europe', language: 'English'},
     {country: 'Spain', continent: 'Europe', language: 'Spanish'},
     {country: 'United Kingdom', continent: 'Europe', language: 'English'},
@@ -32,8 +31,7 @@ var countries = [
     {country: 'Uruguay', continent: 'South America', language: 'Spanish'},
     {country: 'Belgium', continent: 'Europe', language: 'French'}
 ];
-
-var games = [
+const games = [
     'Chess', 'Cross and Circle', 'Daldos', 'Downfall', 'DVONN', 'Fanorona', 'Game of the Generals', 'Ghosts',
     'Abalone', 'Agon', 'Backgammon', 'Battleship', 'Blockade', 'Blood Bowl', 'Bul', 'Camelot', 'Checkers',
     'Go', 'Gipf', 'Guess Who?', 'Hare and Hounds', 'Hex', 'Hijara', 'Isola', 'Janggi (Korean Chess)', 'Le Jeu de la Guerre',
@@ -41,68 +39,280 @@ var games = [
     'Tab', 'Tablut', 'Tantrix', 'Wari', 'Xiangqi (Chinese chess)', 'YINSH', 'ZERTZ', 'Kalah', 'Kamisado', 'Liu po',
     'Lost Cities', 'Mad Gab', 'Master Mind', 'Nine Men\'s Morris', 'Obsession', 'Othello'
 ];
-var booleanValues = [true, 'true', false, 'false'];
-
-var firstNames = [
+const booleanValues = [true, 'true', false, 'false'];
+const firstNames = [
     'Tony', 'Andrew', 'Kevin', 'Bricker', 'Dimple', 'Bas', 'Sophie', 'Isabelle', 'Emily', 'Olivia', 'Lily', 'Chloe', 'Isabella',
     'Amelia', 'Jessica', 'Sophia', 'Ava', 'Charlotte', 'Mia', 'Lucy', 'Grace', 'Ruby',
     'Ella', 'Evie', 'Freya', 'Isla', 'Poppy', 'Daisy', 'Layla'
 ];
-var lastNames = [
+const lastNames = [
     'Smith', 'Connell', 'Flanagan', 'McGee', 'Unalkat', 'Rahman', 'Beckham', 'Black', 'Braxton', 'Brennan', 'Brock', 'Bryson', 'Cadwell',
     'Cage', 'Carson', 'Chandler', 'Cohen', 'Cole', 'Corbin', 'Dallas', 'Dalton', 'Dane',
     'Donovan', 'Easton', 'Fisher', 'Fletcher', 'Grady', 'Greyson', 'Griffin', 'Gunner',
     'Hayden', 'Hudson', 'Hunter', 'Jacoby', 'Jagger', 'Jaxon', 'Jett', 'Kade', 'Kane',
     'Keating', 'Keegan', 'Kingston', 'Kobe'
 ];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-var dataSize = '.1x22';
-
-var size = 'fill'; // model for size select
-var width = '100%'; // the div gets its width and height from here
-var height = '100%';
-
-var rowSelection = 'checkbox';
-
-var groupColumn = {
-    headerName: 'Group',
-    width: 200,
-    field: 'name',
-    headerCheckboxSelection: true,
-    headerCheckboxSelectionFilteredOnly: true,
-    cellRenderer: 'agGroupCellRenderer',
-    cellRendererParams: {
-        checkbox: true
+const colDefs = [
+    {
+        headerName: 'Participant',
+        children: [
+            {
+                headerName: 'Name',
+                rowDrag: true,
+                field: 'name',
+                width: 200,
+                editable: true,
+                enableRowGroup: true,
+                filter: 'personFilter',
+                floatingFilterComponent: 'personFloatingFilterComponent',
+                checkboxSelection: function (params) {
+                    // we put checkbox on the name if we are not doing grouping
+                    return params.columnApi.getRowGroupColumns().length === 0;
+                },
+                headerCheckboxSelection: function (params) {
+                    // we put checkbox on the name if we are not doing grouping
+                    return params.columnApi.getRowGroupColumns().length === 0;
+                },
+                headerCheckboxSelectionFilteredOnly: true
+            },
+            {
+                headerName: 'Language', field: 'language', width: 150, editable: true, filter: 'agSetColumnFilter',
+                cellEditor: 'agSelectCellEditor',
+                enableRowGroup: true,
+                enablePivot: true,
+                cellEditorParams: {
+                    values: [
+                        'English', 'Spanish', 'French', 'Portuguese', 'German',
+                        'Swedish', 'Norwegian', 'Italian', 'Greek', 'Icelandic', 'Portuguese', 'Maltese'
+                    ]
+                },
+                headerTooltip: 'Example tooltip for Language',
+                filterParams: {
+                    selectAllOnMiniFilter: true,
+                    newRowsAction: 'keep',
+                    clearButton: true
+                }
+            },
+            {
+                headerName: 'Country', field: 'country', width: 150, editable: true,
+                cellRenderer: 'countryCellRenderer',
+                enableRowGroup: true,
+                enablePivot: true,
+                cellEditor: 'agRichSelectCellEditor',
+                cellEditorParams: {
+                    cellRenderer: 'countryCellRenderer',
+                    values: [
+                        'Argentina', 'Brazil', 'Colombia', 'France', 'Germany', 'Greece', 'Iceland', 'Ireland',
+                        'Italy', 'Malta', 'Portugal', 'Norway', 'Peru', 'Spain', 'Sweden', 'United Kingdom',
+                        'Uruguay', 'Venezuela', 'Belgium', 'Luxembourg'
+                    ]
+                },
+                floatCell: true,
+                filterParams: {
+                    cellRenderer: 'countryCellRenderer',
+                    newRowsAction: 'keep',
+                    selectAllOnMiniFilter: true,
+                    clearButton: true
+                },
+                floatingFilterComponent: 'countryFloatingFilterComponent',
+                icons: {
+                    sortAscending: '<i class="fa fa-sort-alpha-asc"/>',
+                    sortDescending: '<i class="fa fa-sort-alpha-desc"/>'
+                }
+            }
+        ]
+    },
+    {
+        headerName: 'Game of Choice',
+        children: [
+            {
+                headerName: 'Game Name', field: 'game.name', width: 180, editable: true, filter: 'agSetColumnFilter',
+                tooltipField: 'game.name',
+                cellClass: function () {
+                    return 'alphabet';
+                },
+                filterParams: {
+                    selectAllOnMiniFilter: true,
+                    newRowsAction: 'keep',
+                    clearButton: true
+                },
+                enableRowGroup: true,
+                enablePivot: true,
+                icons: {
+                    sortAscending: '<i class="fa fa-sort-alpha-asc"/>',
+                    sortDescending: '<i class="fa fa-sort-alpha-desc"/>'
+                }
+            },
+            {
+                headerName: 'Bought', field: 'game.bought', filter: 'agSetColumnFilter', editable: true, width: 150,
+                enableRowGroup: true,
+                enablePivot: true,
+                enableValue: true,
+                cellRenderer: 'booleanCellRenderer', cellStyle: {'text-align': 'center'}, comparator: booleanComparator,
+                floatCell: true,
+                filterParams: {
+                    cellRenderer: 'booleanFilterCellRenderer',
+                    selectAllOnMiniFilter: true,
+                    newRowsAction: 'keep',
+                    clearButton: true
+                }
+            }
+        ]
+    },
+    {
+        headerName: 'Performance',
+        groupId: 'performance',
+        children: [
+            {
+                headerName: 'Bank Balance', field: 'bankBalance', width: 180, editable: true,
+                filter: 'winningsFilter', valueFormatter: currencyFormatter,
+                type: 'numericColumn',
+                enableValue: true,
+                icons: {
+                    sortAscending: '<i class="fa fa-sort-amount-asc"/>',
+                    sortDescending: '<i class="fa fa-sort-amount-desc"/>'
+                }
+            },
+            {
+                headerName: 'Extra Info 1', columnGroupShow: 'open', width: 150, editable: false,
+                suppressSorting: true, suppressMenu: true, cellStyle: {'text-align': 'right'},
+                cellRenderer: function () {
+                    return 'Abra...';
+                }
+            },
+            {
+                headerName: 'Extra Info 2', columnGroupShow: 'open', width: 150, editable: false,
+                suppressSorting: true, suppressMenu: true, cellStyle: {'text-align': 'left'},
+                cellRenderer: function () {
+                    return '...cadabra!';
+                }
+            }
+        ]
+    },
+    {
+        headerName: 'Rating',
+        field: 'rating',
+        width: 120,
+        editable: true,
+        cellRenderer: 'ratingRenderer',
+        floatCell: true,
+        enableRowGroup: true,
+        enablePivot: true,
+        enableValue: true,
+        filterParams: {
+            cellRenderer: 'ratingFilterRenderer'
+        }
+    },
+    {
+        headerName: 'Total Winnings',
+        field: 'totalWinnings',
+        filter: 'agNumberColumnFilter',
+        type: 'numericColumn',
+        editable: true, valueParser: numberParser, width: 170,
+        enableValue: true,
+        valueFormatter: currencyFormatter, cellStyle: currencyCssFunc,
+        icons: {
+            sortAscending: '<i class="fa fa-sort-amount-asc"/>',
+            sortDescending: '<i class="fa fa-sort-amount-desc"/>'
+        }
     }
+];
+const monthGroup = {
+    headerName: 'Monthly Breakdown',
+    children: []
 };
+colDefs.push(monthGroup);
+months.forEach(function (month) {
+    monthGroup.children.push({
+        headerName: month, field: month.toLocaleLowerCase(),
+        width: 110, filter: 'agNumberColumnFilter', editable: true, type: 'numericColumn',
+        enableValue: true,
+        cellClassRules: {
+            'good-score': 'typeof x === "number" && x > 50000',
+            'bad-score': 'typeof x === "number" && x < 10000'
+        },
+        valueParser: numberParser, valueFormatter: currencyFormatter,
+        filterParams: {
+            clearButton: true
+        }
+    })
+});
 
-//var aVisible = true;
-//setTimeout( function() {
-//    var start = new Date().getTime();
-//    console.log('start');
-//    aVisible = !aVisible;
-//    gridOptions.columnApi.setColumnsVisible(gridOptions.columnApi.getAllColumns(), aVisible);
-//    //gridOptions.columnApi.getAllColumns().forEach( function(column) {
-//    //    gridOptions.columnApi.setColumnVisible(column, aVisible);
-//    //});
-//    var end = new Date().getTime();
-//    console.log('end ' + (end - start));
-//}, 5000);
+function createData() {
+    const rowCount = 100000;
+    let row = 0;
+    let data = [];
 
-// the moving animation looks crap on IE, firefox and safari, so we turn it off in the demo for them
-function suppressColumnMoveAnimation() {
-    var isFirefox = typeof InstallTrigger !== 'undefined';
-    // At least Safari 3+: "[object HTMLElementConstructor]"
-    var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-    // Internet Explorer 6-11
-    var isIE = /*@cc_on!@*/false || !!document.documentMode;
+    gridOptions.api.showLoadingOverlay();
 
-    return isFirefox || isSafari || isIE;
+    const intervalId = setInterval(function () {
+        for (let i = 0; i < 1000; i++) {
+            if (row < rowCount) {
+                const rowItem = createRowItem(row);
+                data.push(rowItem);
+                row++;
+            }
+        }
+
+        if (row >= rowCount) {
+            clearInterval(intervalId);
+            setTimeout(function () {
+                gridOptions.api.setColumnDefs(colDefs);
+                gridOptions.api.setRowData(data);
+            }, 0);
+        }
+    }, 0);
 }
 
-var gridOptions = {
+function pseudoRandom() {
+    let seed = 123456789;
+    const m = Math.pow(2, 32);
+    const a = 1103515245;
+    const c = 12345;
+
+    // taken from http://stackoverflow.com/questions/3062746/special-simple-random-number-generator
+    seed = (a * seed + c) % m;
+    return seed / m;
+}
+
+function createRowItem(row) {
+    const rowItem = {};
+
+    //create data for the known columns
+    const countriesToPickFrom = Math.floor(countries.length * ((row % 3 + 1) / 3));
+    const countryData = countries[(row * 19) % countriesToPickFrom];
+
+    rowItem.country = countryData.country;
+    rowItem.continent = countryData.continent;
+    rowItem.language = countryData.language;
+
+    const firstName = firstNames[row % firstNames.length];
+    const lastName = lastNames[row % lastNames.length];
+
+    rowItem.name = firstName + ' ' + lastName;
+
+    rowItem.game = {
+        name: games[Math.floor(row * 13 / 17 * 19) % games.length],
+        bought: booleanValues[row % booleanValues.length]
+    };
+
+    rowItem.bankBalance = (Math.round(pseudoRandom() * 100000)) - 3000;
+    rowItem.rating = (Math.round(pseudoRandom() * 5));
+
+    let totalWinnings = 0;
+    months.forEach(function (month) {
+        const value = (Math.round(pseudoRandom() * 100000)) - 20;
+        rowItem[month.toLocaleLowerCase()] = value;
+        totalWinnings += value;
+    });
+    rowItem.totalWinnings = totalWinnings;
+
+    return rowItem;
+}
+
+const gridOptions = {
     components: {
         personFilter: PersonFilter,
         personFloatingFilterComponent: PersonFloatingFilterComponent,
@@ -122,51 +332,13 @@ var gridOptions = {
     },
     enableCellChangeFlash: true,
     rowDragManaged: true,
-    // ensureDomOrder: true,
-    // postProcessPopup: function(params) {
-    //     console.log(params);
-    // },
-    // need to be careful here inside the normal demo, as names are not unique if big data sets
-    // getRowNodeId: function(data) {
-    //     return data.name;
-    // },
-    // suppressAsyncEvents: true,
-    // suppressAggAtRootLevel: true,
     floatingFilter: true,
-    //debug: true,
-    //     editType: 'fullRow',
-    //     debug: true,
-    //     suppressMultiRangeSelection: true,
     rowGroupPanelShow: 'always', // on of ['always','onlyWhenGrouping']
     pivotPanelShow: 'always', // on of ['always','onlyWhenPivoting']
     pivotColumnGroupTotals: 'before',
     pivotRowTotals: 'before',
-    // suppressRowTransform: true,
-    //minColWidth: 50,
-    //maxColWidth: 300,
-//    rowBuffer: 10,
-    //columnDefs: [],
-    //singleClickEdit: true,
-    // suppressClickEdit: true,
     enterMovesDownAfterEdit: true,
     enterMovesDown: true,
-    // domLayout: 'autoHeight',
-    // domLayout: 'forPrint',
-    // groupUseEntireRow: true, //one of [true, false]
-    //        groupDefaultExpanded: 9999, //one of [true, false], or an integer if greater than 1
-    //            headerHeight: 100, // set to an integer, default is 25, or 50 if grouping columns
-    //        groupSuppressAutoColumn: true,
-    //groupSuppressBlankHeader: true,
-    //suppressMovingCss: true,
-    //suppressMovableColumns: true,
-    //groupIncludeFooter: true,
-    suppressColumnMoveAnimation: suppressColumnMoveAnimation(),
-    // suppressRowHoverHighlight: true,
-    // suppressTouch: true,
-    // suppressDragLeaveHidesColumns: true,
-    // suppressMakeColumnVisibleAfterUnGroup: true,
-    // unSortIcon: true,
-    // enableRtl: true,
     multiSortKey: 'ctrl',
     animateRows: true,
     enableColResize: true, //one of [true, false]
@@ -178,39 +350,8 @@ var gridOptions = {
     rowDeselection: true,
     quickFilterText: null,
     groupSelectsChildren: true, // one of [true, false]
-    // pagination: true,
-    // embedFullWidthRows: true,
-    // groupSelectsFiltered: true,
     suppressRowClickSelection: true, // if true, clicking rows doesn't select (useful for checkbox selection)
-    // suppressColumnVirtualisation: true,
-    //suppressContextMenu: true,
-    //suppressFieldDotNotation: true,
-    autoGroupColumnDef: groupColumn,
-    //suppressCellSelection: true,
-    //suppressMultiSort: true,
-    // scrollbarWidth: 20,
-    showToolPanel: true,//window.innerWidth > 1000,
-    // toolPanelSuppressColumnFilter: true,
-    // toolPanelSuppressColumnSelectAll: true,
-    // toolPanelSuppressColumnExpandAll: true,
-    //  autoSizePadding: 20,
-    //toolPanelSuppressGroups: true,
-    //toolPanelSuppressValues: true,
-    //groupSuppressAutoColumn: true,
-    //contractColumnSelection: true,
-    //groupAggFields: ['bankBalance','totalWinnings'],
-    //     groupMultiAutoColumn: true,
-    //     groupHideOpenParents: true,
-    //suppressMenuFilterPanel: true,
-    //     clipboardDeliminator: ',',
-    //suppressMenuMainPanel: true,
-    //suppressMenuColumnPanel: true,
-    //forPrint: true,
-    //rowClass: function(params) { return (params.data.country === 'Ireland') ? "theClass" : null; },
-    //headerCellRenderer: headerCellRenderer_text,
-    //headerCellRenderer: headerCellRenderer_dom,
-    onRowSelected: rowSelected, //callback when row selected
-    onSelectionChanged: selectionChanged, //callback when selection changed,
+    showToolPanel: true,
     aggFuncs: {
         'zero': function () {
             return 0;
@@ -231,79 +372,6 @@ var gridOptions = {
         } else {
             return 0;
         }
-    },
-    // rowHeight: 100,
-    // suppressTabbing: true,
-    // rowHoverClass: true,
-    // suppressAnimationFrame: true,
-    //     pinnedTopRowData: [
-    //         {name: 'Mr Pinned Top 1', language: 'English', country: 'Ireland', continent:"Europe", game:{name:"Hare and Hounds",bought:"true"}, totalWinnings: 342424, bankBalance:75700.9,rating:2,jan:20478.54,feb:2253.06,mar:39308.65,apr:98710.13,may:96186.55,jun:91925.91,jul:1149.47,aug:32493.69,sep:19279.44,oct:21624.14,nov:71239.81,dec:80031.35},
-    //         {name: 'Mr Pinned Top 2', language: 'English', country: 'Ireland', continent:"Europe", game:{name:"Hare and Hounds",bought:"true"}, totalWinnings: 342424, bankBalance:75700.9,rating:2,jan:20478.54,feb:2253.06,mar:39308.65,apr:98710.13,may:96186.55,jun:91925.91,jul:1149.47,aug:32493.69,sep:19279.44,oct:21624.14,nov:71239.81,dec:80031.35},
-    //         {name: 'Mr Pinned Top 3', language: 'English', country: 'Ireland', continent:"Europe", game:{name:"Hare and Hounds",bought:"true"}, totalWinnings: 342424, bankBalance:75700.9,rating:2,jan:20478.54,feb:2253.06,mar:39308.65,apr:98710.13,may:96186.55,jun:91925.91,jul:1149.47,aug:32493.69,sep:19279.44,oct:21624.14,nov:71239.81,dec:80031.35},
-    //         ],
-    //     pinnedBottomRowData: [
-    //         {name: 'Mr Pinned Bottom 1', language: 'English', country: 'Ireland', continent:"Europe", game:{name:"Hare and Hounds",bought:"true"}, totalWinnings: 342424, bankBalance:75700.9,rating:2,jan:20478.54,feb:2253.06,mar:39308.65,apr:98710.13,may:96186.55,jun:91925.91,jul:1149.47,aug:32493.69,sep:19279.44,oct:21624.14,nov:71239.81,dec:80031.35},
-    //         {name: 'Mr Pinned Bottom 2', language: 'English', country: 'Ireland', continent:"Europe", game:{name:"Hare and Hounds",bought:"true"}, totalWinnings: 342424, bankBalance:75700.9,rating:2,jan:20478.54,feb:2253.06,mar:39308.65,apr:98710.13,may:96186.55,jun:91925.91,jul:1149.47,aug:32493.69,sep:19279.44,oct:21624.14,nov:71239.81,dec:80031.35},
-    //         {name: 'Mr Pinned Bottom 3', language: 'English', country: 'Ireland', continent:"Europe", game:{name:"Hare and Hounds",bought:"true"}, totalWinnings: 342424, bankBalance:75700.9,rating:2,jan:20478.54,feb:2253.06,mar:39308.65,apr:98710.13,may:96186.55,jun:91925.91,jul:1149.47,aug:32493.69,sep:19279.44,oct:21624.14,nov:71239.81,dec:80031.35},
-    //     ],
-    // callback when row clicked
-    //     stopEditingWhenGridLosesFocus: true,
-    onRowClicked: function (params) {
-        // console.log("Callback onRowClicked: " + (params.data?params.data.name:null) + " - " + params.event);
-    },
-    // onSortChanged: function (params) {
-    //     console.log("Callback onSortChanged");
-    // },
-    onRowDoubleClicked: function (params) {
-        // console.log("Callback onRowDoubleClicked: " + params.data.name + " - " + params.event);
-    },
-    onGridSizeChanged: function (params) {
-        console.log('Callback onGridSizeChanged: ', params);
-    },
-    // callback when cell clicked
-    onCellClicked: function (params) {
-        // console.log("Callback onCellClicked: " + params.value + " - " + params.colDef.field + ' - ' + params.event);
-    },
-    onColumnVisible: function (event) {
-        console.log('Callback onColumnVisible:', event);
-    },
-    onColumnResized: function (event) {
-        console.log('Callback onColumnResized:', event);
-    },
-    onCellValueChanged: function (params) {
-        console.log('Callback onCellValueChanged:', params);
-    },
-    onRowDataChanged: function (params) {
-        console.log('Callback onRowDataChanged: ');
-    },
-    // callback when cell double clicked
-    onCellDoubleClicked: function (params) {
-        // console.log("Callback onCellDoubleClicked: " + params.value + " - " + params.colDef.field + ' - ' + params.event);
-    },
-    // callback when cell right clicked
-    onCellContextMenu: function (params) {
-        console.log('Callback onCellContextMenu: ' + params.value + ' - ' + params.colDef.field + ' - ' + params.event);
-    },
-    onCellFocused: function (params) {
-        // console.log('Callback onCellFocused: ' + params.rowIndex + " - " + params.colIndex);
-    },
-    onPasteStart: function (params) {
-        console.log('Callback onPasteStart:', params);
-    },
-    onPasteEnd: function (params) {
-        console.log('Callback onPasteEnd:', params);
-    },
-    onGridReady: function (event) {
-        console.log('Callback onGridReady: api = ' + event.api);
-        //event.api.addGlobalListener(function(type, event) {
-        //    console.log('event ' + type);
-        //});
-    },
-    onRowGroupOpened: function (event) {
-        console.log('Callback onRowGroupOpened: node = ' + event.node.key + ', ' + event.node.expanded);
-    },
-    onRangeSelectionChanged: function (event) {
-        // console.log('Callback onRangeSelectionChanged: finished = ' + event.finished);
     },
     getContextMenuItems: getContextMenuItems,
     excelStyles: [
@@ -346,427 +414,10 @@ function getContextMenuItems(params) {
     return result;
 }
 
-//var groupColumn = {
-//    headerName: "Name", field: "name", headerGroup: 'Participant', width: 200, editable: true, filter: PersonFilter,
-//    cellRenderer: {
-//        renderer: "group",
-//        checkbox: true
-//    }
-//};
-
-var defaultCols = [
-    // {
-    //     headerName: 'Test Date',
-    //     editable: true,
-    //     cellEditor: 'date',
-    //     field: 'testDate'
-    // },
-    //{headerName: "", valueGetter: "node.id", width: 20}, // this row is for showing node id, handy for testing
-    {
-        // column group 'Participant
-        headerName: 'Participant',
-        // marryChildren: true,
-        children: [
-            {
-                headerName: 'Name',
-                rowDrag: true,
-                field: 'name',
-                width: 200,
-                editable: true,
-                enableRowGroup: true,
-                // enablePivot: true,
-                filter: 'personFilter',
-                floatingFilterComponent: 'personFloatingFilterComponent',
-                checkboxSelection: function (params) {
-                    // we put checkbox on the name if we are not doing grouping
-                    return params.columnApi.getRowGroupColumns().length === 0;
-                },
-                headerCheckboxSelection: function (params) {
-                    // we put checkbox on the name if we are not doing grouping
-                    return params.columnApi.getRowGroupColumns().length === 0;
-                },
-                headerCheckboxSelectionFilteredOnly: true
-            },
-            {
-                headerName: 'Language', field: 'language', width: 150, editable: true, filter: 'agSetColumnFilter',
-                cellEditor: 'agSelectCellEditor',
-                enableRowGroup: true,
-                enablePivot: true,
-                // rowGroupIndex: 0,
-                // pivotIndex: 0,
-                cellEditorParams: {
-                    values: [
-                        'English', 'Spanish', 'French', 'Portuguese', 'German',
-                        'Swedish', 'Norwegian', 'Italian', 'Greek', 'Icelandic', 'Portuguese', 'Maltese'
-                    ]
-                },
-                // pinned: 'left',
-                headerTooltip: 'Example tooltip for Language',
-                filterParams: {
-                    selectAllOnMiniFilter: true,
-                    newRowsAction: 'keep',
-                    clearButton: true
-                }
-            },
-            {
-                headerName: 'Country', field: 'country', width: 150, editable: true,
-                cellRenderer: 'countryCellRenderer',
-                // pivotIndex: 1,
-                // rowGroupIndex: 1,
-                enableRowGroup: true,
-                // colSpan: function(params) {
-                //     if (params.data && params.data.country==='Ireland') {
-                //         return 2;
-                //     } else if (params.data && params.data.country==='France') {
-                //         return 3;
-                //     } else {
-                //         return 1;
-                //     }
-                // },
-                // cellStyle: function(params) {
-                //     if (params.data && params.data.country==='Ireland') {
-                //         return {backgroundColor: 'red'};
-                //     } else if (params.data && params.data.country==='France') {
-                //         return {backgroundColor: 'green'};
-                //     } else {
-                //         return null;
-                //     }
-                // },
-                // rowSpan: function(params) {
-                //     if (params.data && params.data.country==='Ireland') {
-                //         return 2;
-                //     } else if (params.data && params.data.country==='France') {
-                //         return 3;
-                //     } else {
-                //         return 1;
-                //     }
-                // },
-                enablePivot: true,
-                cellEditor: 'agRichSelectCellEditor',
-                cellEditorParams: {
-                    cellRenderer: 'countryCellRenderer',
-                    values: [
-                        'Argentina', 'Brazil', 'Colombia', 'France', 'Germany', 'Greece', 'Iceland', 'Ireland',
-                        'Italy', 'Malta', 'Portugal', 'Norway', 'Peru', 'Spain', 'Sweden', 'United Kingdom',
-                        'Uruguay', 'Venezuela', 'Belgium', 'Luxembourg'
-                    ]
-                },
-                // pinned: 'left',
-                floatCell: true,
-                filterParams: {
-                    cellRenderer: 'countryCellRenderer',
-                    // cellHeight: 20,
-                    newRowsAction: 'keep',
-                    selectAllOnMiniFilter: true,
-                    clearButton: true
-                },
-                floatingFilterComponent: 'countryFloatingFilterComponent',
-                icons: {
-                    sortAscending: '<i class="fa fa-sort-alpha-asc"/>',
-                    sortDescending: '<i class="fa fa-sort-alpha-desc"/>'
-                }
-            }
-        ]
-    },
-    {
-        // column group 'Game of Choice'
-        headerName: 'Game of Choice',
-        children: [
-            {
-                headerName: 'Game Name', field: 'game.name', width: 180, editable: true, filter: 'agSetColumnFilter',
-                tooltipField: 'game.name',
-                cellClass: function () {
-                    return 'alphabet';
-                },
-                filterParams: {
-                    selectAllOnMiniFilter: true,
-                    newRowsAction: 'keep',
-                    clearButton: true
-                },
-                enableRowGroup: true,
-                enablePivot: true,
-                // pinned: 'right',
-                // rowGroupIndex: 1,
-                icons: {
-                    sortAscending: '<i class="fa fa-sort-alpha-asc"/>',
-                    sortDescending: '<i class="fa fa-sort-alpha-desc"/>'
-                }
-            },
-            {
-                headerName: 'Bought', field: 'game.bought', filter: 'agSetColumnFilter', editable: true, width: 150,
-                // pinned: 'right',
-                // rowGroupIndex: 2,
-                // pivotIndex: 1,
-                enableRowGroup: true,
-                enablePivot: true,
-                enableValue: true,
-                cellRenderer: 'booleanCellRenderer', cellStyle: {'text-align': 'center'}, comparator: booleanComparator,
-                floatCell: true,
-                filterParams: {
-                    cellRenderer: 'booleanFilterCellRenderer',
-                    selectAllOnMiniFilter: true,
-                    newRowsAction: 'keep',
-                    clearButton: true
-                }
-            }
-        ]
-    },
-    {
-        // column group 'Performance'
-        headerName: 'Performance',
-        groupId: 'performance',
-        children: [
-            {
-                headerName: 'Bank Balance', field: 'bankBalance', width: 180, editable: true,
-                filter: 'winningsFilter', valueFormatter: currencyFormatter,
-                type: 'numericColumn',
-                enableValue: true,
-                // colId: 'sf',
-                // valueGetter: '55',
-                // aggFunc: 'sum',
-                icons: {
-                    sortAscending: '<i class="fa fa-sort-amount-asc"/>',
-                    sortDescending: '<i class="fa fa-sort-amount-desc"/>'
-                }
-            },
-            {
-                headerName: 'Extra Info 1', columnGroupShow: 'open', width: 150, editable: false,
-                suppressSorting: true, suppressMenu: true, cellStyle: {'text-align': 'right'},
-                cellRenderer: function () {
-                    return 'Abra...';
-                }
-            },
-            {
-                headerName: 'Extra Info 2', columnGroupShow: 'open', width: 150, editable: false,
-                suppressSorting: true, suppressMenu: true, cellStyle: {'text-align': 'left'},
-                cellRenderer: function () {
-                    return '...cadabra!';
-                }
-            }
-        ]
-    },
-    {
-        headerName: 'Rating', field: 'rating', width: 120, editable: true, cellRenderer: 'ratingRenderer',
-        floatCell: true,
-        enableRowGroup: true,
-        enablePivot: true,
-        enableValue: true,
-        filterParams: {cellRenderer: 'ratingFilterRenderer'}
-    },
-    {
-        headerName: 'Total Winnings', field: 'totalWinnings', filter: 'agNumberColumnFilter', type: 'numericColumn',
-        editable: true, valueParser: numberParser, width: 170,
-        // aggFunc: 'sum',
-        enableValue: true,
-        valueFormatter: currencyFormatter, cellStyle: currencyCssFunc,
-        icons: {
-            sortAscending: '<i class="fa fa-sort-amount-asc"/>',
-            sortDescending: '<i class="fa fa-sort-amount-desc"/>'
-        }
-    }
-];
-//put in the month cols
-var monthGroup = {
-    headerName: 'Monthly Breakdown',
-    children: []
-};
-defaultCols.push(monthGroup);
-months.forEach(function (month) {
-    monthGroup.children.push({
-        headerName: month, field: month.toLocaleLowerCase(),
-        width: 110, filter: 'agNumberColumnFilter', editable: true, type: 'numericColumn',
-        enableValue: true,
-        // aggFunc: 'sum',
-        //hide: true,
-        cellClassRules: {
-            'good-score': 'typeof x === "number" && x > 50000',
-            'bad-score': 'typeof x === "number" && x < 10000'
-        },
-        valueParser: numberParser, valueFormatter: currencyFormatter,
-        filterParams: {
-            clearButton: true
-        }
-    })
-});
-
 function filterDoubleClicked(event) {
     setInterval(function () {
         gridOptions.api.ensureIndexVisible(Math.floor(Math.random() * 100000));
     }, 4000);
-}
-
-function onDataSizeChanged(newDataSize) {
-    dataSize = newDataSize;
-    createData();
-}
-
-function toggleToolPanel() {
-    var showing = gridOptions.api.isToolPanelShowing();
-    gridOptions.api.showToolPanel(!showing);
-}
-
-function getColCount() {
-    switch (dataSize) {
-        case '10x100':
-            return 100;
-        default:
-            return 22;
-    }
-}
-
-function getRowCount() {
-    switch (dataSize) {
-        case '.1x22':
-            return 100;
-        case '1x22':
-            return 1000;
-        case '10x100':
-            return 10000;
-        case '100x22':
-            return 100000;
-        default:
-            return -1;
-    }
-}
-
-function createCols() {
-    var colCount = getColCount();
-    // start with a copy of the default cols
-    var columns = defaultCols.slice(0, colCount);
-
-    // there are 22 cols by default
-    for (var col = 22; col < colCount; col++) {
-        var colName = colNames[col % colNames.length];
-        var colDef = {headerName: colName, field: 'col' + col, width: 200, editable: true};
-        columns.push(colDef);
-    }
-
-    return columns;
-}
-
-var loadInstance = 0;
-
-function createData() {
-
-    var eMessage = document.querySelector('#message');
-    var eMessageText = document.querySelector('#messageText');
-    loadInstance++;
-
-    var loadInstanceCopy = loadInstance;
-    gridOptions.api.showLoadingOverlay();
-
-    var colDefs = createCols();
-
-    var rowCount = getRowCount();
-    var colCount = getColCount();
-
-    var row = 0;
-    var data = [];
-
-    eMessage.style.display = 'inline';
-
-    var intervalId = setInterval(function () {
-        if (loadInstanceCopy != loadInstance) {
-            clearInterval(intervalId);
-            return;
-        }
-
-        for (var i = 0; i < 1000; i++) {
-            if (row < rowCount) {
-                var rowItem = createRowItem(row, colCount);
-                data.push(rowItem);
-                row++;
-            }
-        }
-
-        eMessageText.innerHTML = ' Generating rows ' + row;
-
-        if (row >= rowCount) {
-            clearInterval(intervalId);
-            setTimeout(function () {
-                gridOptions.api.setColumnDefs(colDefs);
-                gridOptions.api.setRowData(data);
-                eMessage.style.display = 'none';
-                eMessageText.innerHTML = '';
-            }, 0);
-        }
-
-    }, 0);
-}
-
-function createRowItem(row, colCount) {
-    var rowItem = {};
-
-    //create data for the known columns
-    var countriesToPickFrom = Math.floor(countries.length * ((row % 3 + 1) / 3));
-    var countryData = countries[(row * 19) % countriesToPickFrom];
-    rowItem.country = countryData.country;
-    rowItem.continent = countryData.continent;
-    rowItem.language = countryData.language;
-
-    var firstName = firstNames[row % firstNames.length];
-    var lastName = lastNames[row % lastNames.length];
-    rowItem.name = firstName + ' ' + lastName;
-
-    rowItem.game = {
-        name: games[Math.floor(row * 13 / 17 * 19) % games.length],
-        bought: booleanValues[row % booleanValues.length]
-    };
-
-    rowItem.bankBalance = (Math.round(pseudoRandom() * 100000)) - 3000;
-    rowItem.rating = (Math.round(pseudoRandom() * 5));
-
-    var totalWinnings = 0;
-    months.forEach(function (month) {
-        var value = (Math.round(pseudoRandom() * 100000)) - 20;
-        rowItem[month.toLocaleLowerCase()] = value;
-        totalWinnings += value;
-    });
-    rowItem.totalWinnings = totalWinnings;
-
-    //create dummy data for the additional columns
-    for (var col = defaultCols.length; col < colCount; col++) {
-        var value;
-        var randomBit = pseudoRandom().toString().substring(2, 5);
-        value = colNames[col % colNames.length] + '-' + randomBit + ' - (' + (row + 1) + ',' + col + ')';
-        rowItem['col' + col] = value;
-    }
-
-    return rowItem;
-}
-
-// taken from http://stackoverflow.com/questions/3062746/special-simple-random-number-generator
-var seed = 123456789;
-var m = Math.pow(2, 32);
-var a = 1103515245;
-var c = 12345;
-
-function pseudoRandom() {
-    seed = (a * seed + c) % m;
-    return seed / m;
-}
-
-function selectionChanged(event) {
-    console.log('Callback selectionChanged: selection count = ' + gridOptions.api.getSelectedNodes().length);
-}
-
-function rowSelected(event) {
-    // the number of rows selected could be huge, if the user is grouping and selects a group, so
-    // to stop the console from clogging up, we only print if in the first 10 (by chance we know
-    // the node id's are assigned from 0 upwards)
-    if (event.node.id < 10) {
-        var valueToPrint = event.node.group ? 'group (' + event.node.key + ')' : event.node.data.name;
-        console.log('Callback rowSelected: ' + valueToPrint + ' - ' + event.node.isSelected());
-    }
-}
-
-function onThemeChanged(newTheme) {
-    gridDiv.className = newTheme;
-
-    gridOptions.api.resetRowHeights();
-    gridOptions.api.redrawRows();
-    gridOptions.api.refreshHeader();
-    gridOptions.api.refreshToolPanel();
 }
 
 var filterCount = 0;
@@ -781,7 +432,7 @@ function onFilterChanged(newFilter) {
     }, 300);
 }
 
-var COUNTRY_CODES = {
+const COUNTRY_CODES = {
     Ireland: 'ie',
     Luxembourg: 'lu',
     Belgium: 'be',
@@ -805,8 +456,8 @@ var COUNTRY_CODES = {
 };
 
 function numberParser(params) {
-    var newValue = params.newValue;
-    var valueAsNumber;
+    const newValue = params.newValue;
+    let valueAsNumber;
     if (newValue === null || newValue === undefined || newValue === '') {
         valueAsNumber = null;
     } else {
@@ -1029,21 +680,6 @@ function ratingRendererGeneral(value, forFilter) {
     }
     result += '</span>';
     return result;
-}
-
-function currencyRenderer(params) {
-    if (params.value === null || params.value === undefined) {
-        return null;
-    } else if (isNaN(params.value)) {
-        return 'NaN';
-    } else {
-        // if we are doing 'count', then we do not show pound sign
-        if (params.node.group && params.column.aggFunc === 'count') {
-            return params.value;
-        } else {
-            return '&pound;' + Math.floor(params.value).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-        }
-    }
 }
 
 function currencyFormatter(params) {

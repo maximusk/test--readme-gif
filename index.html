@@ -11,8 +11,8 @@
     <script src="https://unpkg.com/ag-grid-enterprise@18.0.1/dist/ag-grid-enterprise.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
     <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
-    <script src="grid-performance.js"></script>
-    <script src="grid-api.js"></script>
+    <script src="grid-performance.js" type="module"></script>
+    <script src="grid-api.js" type="module"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -155,26 +155,26 @@
                 ag-Grid can process over 150,000 updates per second. Together with the latest browsers and ag-Grid’s
                 cutting-edge algorithms.
             </p>
-            <div class="api-code" style="padding: 20px; background: #f8f8f8; display: flex;  align-items: center; min-height: 50px; border: 1px solid #e3e2e2;">
-                <code style="font-size: 15px;"></code>
+            <div class="api-code" style="font-size: 14px; padding: 12px; background: #f8f8f8; display: flex;  align-items: center; min-height: 50px; border: 1px solid #e3e2e2;">
+                <pre></pre>
             </div>
             <h4>Click operation to see API in action:</h4>
             <ul class="api-operations">
-                <li><a onclick="callGridApi('api.setSort(country)')">Sort by Country</a></li>
-                <li><a onclick="callGridApi('api.setSort(country, year)')">Sort by Country & Year</a></li>
-                <li><a onclick="callGridApi('api.setFilter(Ireland)')">Filter by Ireland</a></li>
-                <li><a onclick="callGridApi('api.setSort(year)')">Sort by Year</a></li>
-                <li><a onclick="callGridApi('api.clearFilterAndSort()')">Clear filtering and sorting</a></li>
-                <li><a onclick="callGridApi('api.setGrouping(country, year, sport)')">
-                    Group by Country, Year & Sport</a>
+                <li data-action="sort-by-one-column"><a>Sort by one column (Country)</a></li>
+                <li data-action="sort-by-two-columns"><a>Sort by two columns (Country & Year)</a></li>
+                <li data-action="clear-sorting"><a>Clear sorting</a></li>
+                <li data-action="set-filter-by-one-column"><a>Filter by one column (United States)</a></li>
+                <li data-action="remove-filter"><a>Clear filtering</a></li>
+                <li data-action="group-by-three-columns">
+                    <a>
+                        Group by three columns (Country, Year & Sport)
+                    </a>
                 </li>
-                <li><a onclick="callGridApi('api.moveColumns(gold, silver, bronze, total)')">Move columns</a></li>
-                <li><a onclick="callGridApi('rowNode.setExpanded(true)')">Expand rows</a></li>
-                <li><a onclick="callGridApi('rowNode.setExpanded(false)')">Collapse rows</a></li>
-                <li><a onclick="callGridApi('api.removeGrouping()')">Remove grouping</a></li>
-                <li><a onclick="callGridApi('api.moveColumns(gold, silver, bronze, total)')">Move columns</a></li>
-                <li><a onclick="callGridApi('rowNode.setRowHeight(100)')">Set row height</a></li>
-                <li><a onclick="callGridApi('api.resetRowHeights()')">Reset row height to default</a></li>
+                <li data-action="expand-top-level-rows"><a>Expand top level rows</a></li>
+                <li data-action="collapse-top-level-rows"><a>Collapse top level rows</a></li>
+                <li data-action="remove-grouping"><a>Remove grouping</a></li>
+                <li data-action="set-row-height"><a>Set row height</a></li>
+                <li data-action="reset-row-height"><a>Reset row height to default</a></li>
             </ul>
         </div>
     </div>
