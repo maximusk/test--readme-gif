@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
     <link rel="shortcut icon" href="assets/favicons/favicon.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <script src="https://unpkg.com/ag-grid-enterprise@18.0.1/dist/ag-grid-enterprise.min.js"></script>
+    <script src="https://unpkg.com/ag-grid-enterprise@18.1.1/dist/ag-grid-enterprise.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
     <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
     <script src="grid-performance.js" type="module"></script>
@@ -46,30 +46,31 @@
 </section>
 <section class="features">
     <h2>Packed with features that your users need</h2>
+    <quote>To say it's feature-rich is to say nothing</quote>
     <div class="container">
         <div>
-            <h3>Grouping / Aggregation</h3>
+            <h3>Rich UI controls</h3>
             <div class="centered img-container">
-                <img class="static" src="assets/images/grid-static.jpg">
-                <img class="dynamic" src="assets/images/grid-dynamic.gif">
+                <img class="static" src="assets/images/rich-ui.jpg">
+                <img class="dynamic" src="assets/images/rich-ui.gif">
             </div>
             <p>Let your users explore their data. ag-Grid allows the end user to group by specific columns. Optionally,
                 you can display various aggregate column values in the grouped row.</p>
         </div>
         <div>
-            <h3>Filtering</h3>
+            <h3>Rows & Columns Interactions</h3>
             <div class="centered img-container">
-                <img class="static" src="assets/images/grid-static.jpg">
-                <img class="dynamic" src="assets/images/grid-dynamic.gif">
+                <img class="static" src="assets/images/row-column-interactions.jpg">
+                <img class="dynamic" src="assets/images/row-column-interactions.gif">
             </div>
             <p>ag-Grid comes with an extensive set of built-in column filter types. You can also filter by all columns
                 simultaneously with quick filtering. You can even implement your own custom filtering UI and logic.</p>
         </div>
         <div>
-            <h3>Cell Editing</h3>
+            <h3>Grouping / Aggregation</h3>
             <div class="centered img-container">
-                <img class="static" src="assets/images/grid-static.jpg">
-                <img class="dynamic" src="assets/images/grid-dynamic.gif">
+                <img class="static" src="assets/images/aggregation.jpg">
+                <img class="dynamic" src="assets/images/aggregation.gif">
             </div>
             <p>Users can update data with cell editing. Use one of the provided cell editors or create your own to suit
                 your business needs.</p>
@@ -77,8 +78,8 @@
         <div>
             <h3>Tree Data</h3>
             <div class="centered img-container">
-                <img class="static" src="assets/images/grid-static.jpg">
-                <img class="dynamic" src="assets/images/grid-dynamic.gif">
+                <img class="static" src="assets/images/tree-view.jpg">
+                <img class="dynamic" src="assets/images/tree-view.gif">
             </div>
             <p>You can easily display data has parent / child relationships by passing the relationship as part of the
                 data. For example, a folder can contain zero or more files and other folders.</p>
@@ -111,40 +112,14 @@
         </div>
         <div>
             <div class="grid-example">
-                <div class="example-toolbar">
-                    <div>
-                        <label for="data-size">Data Size:</label>
-                        <select onchange="onDataSizeChanged(this.value)" id="data-size">
-                            <option value=".1x22">100 Rows, 22 Cols</option>
-                            <option value="1x22">1,000 Rows, 22 Cols</option>
-                            <option value="10x100">10,000 Rows, 100 Cols</option>
-                            <option value="100x22">100,000 Rows, 22 Cols</option>
-                        </select>
-                        <span id="message" style="margin-left: 10px; display: none;">
-                            <i class="fas fa-spinner fa-pulse fa-fw"></i>
-                        </span>
-                    </div>
-                    <div>
-                        <label for="grid-theme">Theme:</label>
-                        <select onchange="onThemeChanged(this.value)" id="grid-theme">
-                            <option value="ag-theme-balham">Balham</option>
-                            <option value="ag-theme-balham-dark" selected>Balham (dark)</option>
-                            <option value="ag-theme-material">Material</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="search-toolbar" style="display: flex;">
-                    <label for="global-filter" style="margin: 0 10px 0 0;">Filter:</label>
-                    <input placeholder="Type text from any column..." type="text" oninput="onFilterChanged(this.value)" ondblclick="filterDoubleClicked(event)" id="global-filter" style="flex-grow: 1;">
-                </div>
-                <span id="messageText"></span>
+                <h4>100 000 records and 20 columns</h4>
                 <div class="grid-container" style="height:500px;"></div>
             </div>
         </div>
     </div>
 </section>
 <section class="api" style="padding-bottom: 50px;">
-    <h2>Easy to use with developer friendly API</h2>
+    <h2>API is designed with a developer in mind</h2>
     <div class="container">
         <div>
             <div class="grid-container ag-theme-balham-dark" style="height: 100%;"></div>

@@ -65,8 +65,8 @@ const colDefs = [
                 width: 200,
                 editable: true,
                 enableRowGroup: true,
-                filter: 'personFilter',
-                floatingFilterComponent: 'personFloatingFilterComponent',
+                filter: 'agTextColumnFilter',
+                // floatingFilterComponent: 'personFloatingFilterComponent',
                 checkboxSelection: function (params) {
                     // we put checkbox on the name if we are not doing grouping
                     return params.columnApi.getRowGroupColumns().length === 0;
@@ -110,13 +110,13 @@ const colDefs = [
                     ]
                 },
                 floatCell: true,
+                filter: 'agSetColumnFilter',
                 filterParams: {
                     cellRenderer: 'countryCellRenderer',
                     newRowsAction: 'keep',
                     selectAllOnMiniFilter: true,
                     clearButton: true
                 },
-                floatingFilterComponent: 'countryFloatingFilterComponent',
                 icons: {
                     sortAscending: '<i class="fa fa-sort-alpha-asc"/>',
                     sortDescending: '<i class="fa fa-sort-alpha-desc"/>'
@@ -167,26 +167,12 @@ const colDefs = [
         children: [
             {
                 headerName: 'Bank Balance', field: 'bankBalance', width: 180, editable: true,
-                filter: 'winningsFilter', valueFormatter: currencyFormatter,
+                filter: 'agNumberColumnFilter', valueFormatter: currencyFormatter,
                 type: 'numericColumn',
                 enableValue: true,
                 icons: {
                     sortAscending: '<i class="fa fa-sort-amount-asc"/>',
                     sortDescending: '<i class="fa fa-sort-amount-desc"/>'
-                }
-            },
-            {
-                headerName: 'Extra Info 1', columnGroupShow: 'open', width: 150, editable: false,
-                suppressSorting: true, suppressMenu: true, cellStyle: {'text-align': 'right'},
-                cellRenderer: function () {
-                    return 'Abra...';
-                }
-            },
-            {
-                headerName: 'Extra Info 2', columnGroupShow: 'open', width: 150, editable: false,
-                suppressSorting: true, suppressMenu: true, cellStyle: {'text-align': 'left'},
-                cellRenderer: function () {
-                    return '...cadabra!';
                 }
             }
         ]
@@ -240,6 +226,22 @@ months.forEach(function (month) {
     })
 });
 
+const gridOptions = {
+    components: {
+        booleanFilterCellRenderer: booleanFilterCellRenderer,
+        ratingFilterRenderer: ratingFilterRenderer,
+
+        countryCellRenderer: countryCellRenderer,
+        booleanCellRenderer: booleanCellRenderer,
+        ratingRenderer: ratingRenderer
+    },
+    floatingFilter: true,
+    enableColResize: true,
+    enableSorting: true,
+    enableFilter: true,
+    enableRangeSelection: true
+};
+
 function createData() {
     const rowCount = 100000;
     let row = 0;
@@ -266,8 +268,11 @@ function createData() {
     }, 0);
 }
 
+// it's important for the `seed` to be outside `pseudoRandom`
+// since it's mutated inside the function
+let seed = 123456789;
+
 function pseudoRandom() {
-    let seed = 123456789;
     const m = Math.pow(2, 32);
     const a = 1103515245;
     const c = 12345;
@@ -312,149 +317,6 @@ function createRowItem(row) {
     return rowItem;
 }
 
-const gridOptions = {
-    components: {
-        personFilter: PersonFilter,
-        personFloatingFilterComponent: PersonFloatingFilterComponent,
-        countryCellRenderer: countryCellRenderer,
-        countryFloatingFilterComponent: CountryFloatingFilterComponent,
-        booleanCellRenderer: booleanCellRenderer,
-        booleanFilterCellRenderer: booleanFilterCellRenderer,
-        winningsFilter: WinningsFilter,
-        ratingRenderer: ratingRenderer,
-        ratingFilterRenderer: ratingFilterRenderer
-    },
-    defaultExportParams: {
-        columnGroups: true
-    },
-    defaultColDef: {
-        minWidth: 50
-    },
-    enableCellChangeFlash: true,
-    rowDragManaged: true,
-    floatingFilter: true,
-    rowGroupPanelShow: 'always', // on of ['always','onlyWhenGrouping']
-    pivotPanelShow: 'always', // on of ['always','onlyWhenPivoting']
-    pivotColumnGroupTotals: 'before',
-    pivotRowTotals: 'before',
-    enterMovesDownAfterEdit: true,
-    enterMovesDown: true,
-    multiSortKey: 'ctrl',
-    animateRows: true,
-    enableColResize: true, //one of [true, false]
-    enableSorting: true, //one of [true, false]
-    enableFilter: true, //one of [true, false]
-    enableStatusBar: true,
-    enableRangeSelection: true,
-    rowSelection: 'multiple', // one of ['single','multiple'], leave blank for no selection
-    rowDeselection: true,
-    quickFilterText: null,
-    groupSelectsChildren: true, // one of [true, false]
-    suppressRowClickSelection: true, // if true, clicking rows doesn't select (useful for checkbox selection)
-    showToolPanel: true,
-    aggFuncs: {
-        'zero': function () {
-            return 0;
-        }
-    },
-    getBusinessKeyForNode: function (node) {
-        if (node.data) {
-            return node.data.name;
-        } else {
-            return '';
-        }
-    },
-    defaultGroupSortComparator: function (nodeA, nodeB) {
-        if (nodeA.key < nodeB.key) {
-            return -1;
-        } else if (nodeA.key > nodeB.key) {
-            return 1;
-        } else {
-            return 0;
-        }
-    },
-    getContextMenuItems: getContextMenuItems,
-    excelStyles: [
-        {
-            id: 'good-score',
-            interior: {
-                color: '#94e494', pattern: 'Solid'
-            }
-        },
-        {
-            id: 'bad-score',
-            interior: {
-                color: '#e49494', pattern: 'Solid'
-            }
-        },
-        {
-            id: 'header',
-            interior: {
-                color: '#CCCCCC', pattern: 'Solid'
-            }
-        }
-    ]
-};
-
-function getContextMenuItems(params) {
-    if (params.node == null) return null;
-    var result = params.defaultItems.splice(0);
-    result.push(
-        {
-            name: 'Custom Menu Item',
-            icon: '<img src="images/lab.svg" style="width: 14px;"/>',
-            //shortcut: 'Alt + M',
-            action: function () {
-                var value = params.value ? params.value : '<empty>';
-                window.alert('You clicked a custom menu item on cell ' + value);
-            }
-        }
-    );
-
-    return result;
-}
-
-function filterDoubleClicked(event) {
-    setInterval(function () {
-        gridOptions.api.ensureIndexVisible(Math.floor(Math.random() * 100000));
-    }, 4000);
-}
-
-var filterCount = 0;
-
-function onFilterChanged(newFilter) {
-    filterCount++;
-    var filterCountCopy = filterCount;
-    setTimeout(function () {
-        if (filterCount === filterCountCopy) {
-            gridOptions.api.setQuickFilter(newFilter);
-        }
-    }, 300);
-}
-
-const COUNTRY_CODES = {
-    Ireland: 'ie',
-    Luxembourg: 'lu',
-    Belgium: 'be',
-    Spain: 'es',
-    'United Kingdom': 'gb',
-    France: 'fr',
-    Germany: 'de',
-    Sweden: 'se',
-    Italy: 'it',
-    Greece: 'gr',
-    Iceland: 'is',
-    Portugal: 'pt',
-    Malta: 'mt',
-    Norway: 'no',
-    Brazil: 'br',
-    Argentina: 'ar',
-    Colombia: 'co',
-    Peru: 'pe',
-    Venezuela: 've',
-    Uruguay: 'uy'
-};
-
 function numberParser(params) {
     const newValue = params.newValue;
     let valueAsNumber;
@@ -465,192 +327,6 @@ function numberParser(params) {
     }
     return valueAsNumber;
 }
-
-function PersonFilter() {
-}
-
-PersonFilter.prototype.init = function (params) {
-    this.valueGetter = params.valueGetter;
-    this.filterText = null;
-    this.params = params;
-    this.setupGui();
-};
-
-// not called by ag-Grid, just for us to help setup
-PersonFilter.prototype.setupGui = function () {
-    this.gui = document.createElement('div');
-    this.gui.innerHTML =
-        '<div style="padding: 4px;">' +
-        '<div style="font-weight: bold;">Custom Athlete Filter</div>' +
-        '<div><input style="margin: 4px 0px 4px 0px;" type="text" id="filterText" placeholder="Full name search..."/></div>' +
-        '<div style="margin-top: 20px; width: 200px;">This filter does partial word search on multiple words, e.g. "mich phel" still brings back Michael Phelps.</div>' +
-        '<div style="margin-top: 20px; width: 200px;">Just to illustrate that anything can go in here, here is an image:</div>' +
-        '<div><img src="images/ag-Grid2-200.png" style="width: 150px; text-align: center; padding: 10px; margin: 10px; border: 1px solid lightgrey;"/></div>' +
-        '</div>';
-
-    var that = this;
-    this.onFilterChanged = function () {
-        that.extractFilterText();
-        that.params.filterChangedCallback();
-    };
-
-    this.eFilterText = this.gui.querySelector('#filterText');
-    this.eFilterText.addEventListener('input', this.onFilterChanged);
-};
-
-PersonFilter.prototype.extractFilterText = function () {
-    this.filterText = this.eFilterText.value;
-};
-
-PersonFilter.prototype.getGui = function () {
-    return this.gui;
-};
-
-PersonFilter.prototype.doesFilterPass = function (params) {
-    // make sure each word passes separately, ie search for firstname, lastname
-    var passed = true;
-    var valueGetter = this.valueGetter;
-    this.filterText.toLowerCase().split(' ').forEach(function (filterWord) {
-        var value = valueGetter(params);
-        if (value.toString().toLowerCase().indexOf(filterWord) < 0) {
-            passed = false;
-        }
-    });
-
-    return passed;
-};
-
-PersonFilter.prototype.isFilterActive = function () {
-    var isActive = this.filterText !== null && this.filterText !== undefined && this.filterText !== '';
-    return isActive;
-};
-
-PersonFilter.prototype.getModelAsString = function (model) {
-    return model ? model : '';
-};
-
-PersonFilter.prototype.getModel = function () {
-    return this.eFilterText.value;
-};
-
-// lazy, the example doesn't use setModel()
-PersonFilter.prototype.setModel = function (model) {
-    this.eFilterText.value = model;
-    this.extractFilterText();
-};
-
-PersonFilter.prototype.destroy = function () {
-    this.eFilterText.removeEventListener('input', this.onFilterChanged);
-};
-
-function PersonFloatingFilterComponent() {
-}
-
-PersonFloatingFilterComponent.prototype.init = function (params) {
-    this.params = params;
-    this.eGui = document.createElement('input');
-    var eGui = this.eGui;
-    this.changeEventListener = function () {
-        params.onFloatingFilterChanged(eGui.value);
-    };
-    this.eGui.addEventListener('input', this.changeEventListener);
-};
-
-PersonFloatingFilterComponent.prototype.getGui = function () {
-    return this.eGui;
-};
-
-PersonFloatingFilterComponent.prototype.onParentModelChanged = function (model) {
-    // add in child, one for each flat
-    if (model) {
-        this.eGui.value = model;
-    } else {
-        this.eGui.value = '';
-    }
-};
-
-PersonFloatingFilterComponent.prototype.destroy = function () {
-    this.eGui.removeEventListener('input', this.changeEventListener);
-};
-
-function WinningsFilter() {
-}
-
-WinningsFilter.prototype.init = function (params) {
-
-    var uniqueId = Math.random();
-    this.filterChangedCallback = params.filterChangedCallback;
-    this.eGui = document.createElement('div');
-    this.eGui.innerHTML =
-        '<div style="padding: 4px;">' +
-        '<div style="font-weight: bold;">Example Custom Filter</div>' +
-        '<div><label><input type="radio" name="filter"' + uniqueId + ' id="cbNoFilter">No filter</input></label></div>' +
-        '<div><label><input type="radio" name="filter"' + uniqueId + ' id="cbPositive">Positive</input></label></div>' +
-        '<div><label><input type="radio" name="filter"' + uniqueId + ' id="cbNegative">Negative</input></label></div>' +
-        '<div><label><input type="radio" name="filter"' + uniqueId + ' id="cbGreater50">&gt; &pound;50,000</label></div>' +
-        '<div><label><input type="radio" name="filter"' + uniqueId + ' id="cbGreater90">&gt; &pound;90,000</label></div>' +
-        '</div>';
-    this.cbNoFilter = this.eGui.querySelector('#cbNoFilter');
-    this.cbPositive = this.eGui.querySelector('#cbPositive');
-    this.cbNegative = this.eGui.querySelector('#cbNegative');
-    this.cbGreater50 = this.eGui.querySelector('#cbGreater50');
-    this.cbGreater90 = this.eGui.querySelector('#cbGreater90');
-    this.cbNoFilter.checked = true; // initialise the first to checked
-    this.cbNoFilter.onclick = this.filterChangedCallback;
-    this.cbPositive.onclick = this.filterChangedCallback;
-    this.cbNegative.onclick = this.filterChangedCallback;
-    this.cbGreater50.onclick = this.filterChangedCallback;
-    this.cbGreater90.onclick = this.filterChangedCallback;
-    this.valueGetter = params.valueGetter;
-};
-
-WinningsFilter.prototype.getGui = function () {
-    return this.eGui;
-};
-
-WinningsFilter.prototype.doesFilterPass = function (node) {
-    var value = this.valueGetter(node);
-    if (this.cbNoFilter.checked) {
-        return true;
-    } else if (this.cbPositive.checked) {
-        return value >= 0;
-    } else if (this.cbNegative.checked) {
-        return value < 0;
-    } else if (this.cbGreater50.checked) {
-        return value >= 50000;
-    } else if (this.cbGreater90.checked) {
-        return value >= 90000;
-    } else {
-        console.error('invalid checkbox selection');
-    }
-};
-
-WinningsFilter.prototype.isFilterActive = function () {
-    return !this.cbNoFilter.checked;
-};
-
-WinningsFilter.prototype.getModelAsString = function (model) {
-    return model ? model : '';
-};
-
-WinningsFilter.prototype.getModel = function () {
-    if (this.cbNoFilter.checked) {
-        return '';
-    } else if (this.cbPositive.checked) {
-        return 'value >= 0';
-    } else if (this.cbNegative.checked) {
-        return 'value < 0';
-    } else if (this.cbGreater50.checked) {
-        return 'value >= 50000';
-    } else if (this.cbGreater90.checked) {
-        return 'value >= 90000';
-    } else {
-        console.error('invalid checkbox selection');
-    }
-};
-// lazy, the example doesn't use setModel()
-WinningsFilter.prototype.setModel = function () {
-};
 
 function currencyCssFunc(params) {
     if (params.value !== null && params.value !== undefined && params.value < 0) {
@@ -669,8 +345,8 @@ function ratingRenderer(params) {
 }
 
 function ratingRendererGeneral(value, forFilter) {
-    var result = '<span>';
-    for (var i = 0; i < 5; i++) {
+    let result = '<span>';
+    for (let i = 0; i < 5; i++) {
         if (value > i) {
             result += '<img src="assets/images/star.svg" class="star" width=12 height=12 />';
         }
@@ -697,23 +373,26 @@ function currencyFormatter(params) {
     }
 }
 
+function parseBoolean(value) {
+    if (value === 'true' || value === true || value === 1) {
+        return true;
+    } else if (value === 'false' || value === false || value === 0) {
+        return false;
+    } else {
+        return null;
+    }
+}
+
 function booleanComparator(value1, value2) {
-    var value1Cleaned = booleanCleaner(value1);
-    var value2Cleaned = booleanCleaner(value2);
-    var value1Ordinal = value1Cleaned === true ? 0 : (value1Cleaned === false ? 1 : 2);
-    var value2Ordinal = value2Cleaned === true ? 0 : (value2Cleaned === false ? 1 : 2);
+    const value1Cleaned = parseBoolean(value1);
+    const value2Cleaned = parseBoolean(value2);
+    const value1Ordinal = value1Cleaned === true ? 0 : (value1Cleaned === false ? 1 : 2);
+    const value2Ordinal = value2Cleaned === true ? 0 : (value2Cleaned === false ? 1 : 2);
     return value1Ordinal - value2Ordinal;
 }
 
-var count = 0;
-
 function booleanCellRenderer(params) {
-    count++;
-    if (count <= 1) {
-        // params.api.onRowHeightChanged();
-    }
-
-    var valueCleaned = booleanCleaner(params.value);
+    const valueCleaned = parseBoolean(params.value);
     if (valueCleaned === true) {
         return '<span title=\'true\' class=\'ag-icon ag-icon-tick content-icon\'></span>';
     } else if (valueCleaned === false) {
@@ -726,7 +405,7 @@ function booleanCellRenderer(params) {
 }
 
 function booleanFilterCellRenderer(params) {
-    var valueCleaned = booleanCleaner(params.value);
+    const valueCleaned = parseBoolean(params.value);
     if (valueCleaned === true) {
         return '<span title=\'true\' class=\'ag-icon ag-icon-tick content-icon\'></span>';
     } else if (valueCleaned === false) {
@@ -736,63 +415,35 @@ function booleanFilterCellRenderer(params) {
     }
 }
 
-function booleanCleaner(value) {
-    if (value === 'true' || value === true || value === 1) {
-        return true;
-    } else if (value === 'false' || value === false || value === 0) {
-        return false;
-    } else {
-        return null;
-    }
-}
-
-function CountryFloatingFilterComponent() {
-}
-
-CountryFloatingFilterComponent.prototype.init = function (params) {
-    this.params = params;
-    this.eGui = document.createElement('div');
-    // this.eGui.style.borderBottom = '1px solid lightgrey';
-};
-
-CountryFloatingFilterComponent.prototype.getGui = function () {
-    return this.eGui;
-};
-
-CountryFloatingFilterComponent.prototype.onParentModelChanged = function (dataModel) {
-    // add in child, one for each flat
-    if (dataModel) {
-
-        var model = dataModel.values;
-
-        var flagsHtml = [];
-        var printDotDotDot = false;
-        if (model.length > 4) {
-            var toPrint = model.slice(0, 4);
-            printDotDotDot = true;
-        } else {
-            var toPrint = model;
-        }
-        toPrint.forEach(function (country) {
-            flagsHtml.push('<img class="flag" style="border: 0px; width: 15px; height: 10px; margin-left: 2px" ' +
-                'src="https://flags.fmcdn.net/data/flags/mini/'
-                + COUNTRY_CODES[country] + '.png">');
-        });
-        this.eGui.innerHTML = '(' + model.length + ') ' + flagsHtml.join('');
-        if (printDotDotDot) {
-            this.eGui.innerHTML = this.eGui.innerHTML + '...';
-        }
-    } else {
-        this.eGui.innerHTML = '';
-    }
-};
-
 function countryCellRenderer(params) {
+    const COUNTRY_CODES = {
+        Ireland: 'ie',
+        Luxembourg: 'lu',
+        Belgium: 'be',
+        Spain: 'es',
+        'United Kingdom': 'gb',
+        France: 'fr',
+        Germany: 'de',
+        Sweden: 'se',
+        Italy: 'it',
+        Greece: 'gr',
+        Iceland: 'is',
+        Portugal: 'pt',
+        Malta: 'mt',
+        Norway: 'no',
+        Brazil: 'br',
+        Argentina: 'ar',
+        Colombia: 'co',
+        Peru: 'pe',
+        Venezuela: 've',
+        Uruguay: 'uy'
+    };
+
     //get flags from here: http://www.freeflagicons.com/
     if (params.value === '' || params.value === undefined || params.value === null) {
         return '';
     } else {
-        var flag = '<img class="flag" border="0" width="15" height="10" src="https://flags.fmcdn.net/data/flags/mini/' + COUNTRY_CODES[params.value] + '.png">';
+        const flag = '<img class="flag" border="0" width="15" height="10" src="https://flags.fmcdn.net/data/flags/mini/' + COUNTRY_CODES[params.value] + '.png">';
         return flag + ' ' + params.value;
     }
 }
