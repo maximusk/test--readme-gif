@@ -20,22 +20,28 @@
 <body>
 <section class="head">
     <div class="logo"><a href="/" title="The Best HTML 5 Grid in the World">ag-Grid</a></div>
-    <h1>The best React Grid in the world</h1>
-    <div class="container" style="width: 1000px;">
+    <h1>
+        <span>The best React Grid in the world</span>
+        <br>
+        <span>Trusted by the Community. Built for Enterprise</span>
+    </h1>
+    <div class="container" style="width: 1000px; font-size: 17px;">
         <div>
-            <h3>Trusted by the Community</h3>
+            <h3>Community Edition</h3>
             <!--todo-->
-            <ul style="padding-left: 112px;">
+            <ul style="padding-left: 90px;">
+                <li><strong>Free</strong> open-source version licensed under MIT</li>
                 <li>Over <strong>150,000</strong> downloads per month</li>
                 <li>Over <strong>2 million</strong> total downloads</li>
             </ul>
         </div>
         <div>
-            <h3>Built for Enterprise</h3>
+            <h3>Enterprise Edition</h3>
             <!--todo-->
-            <ul style="padding-left: 82px">
-                <li>Over <strong>1,500</strong> Companies use ag-Grid Enterprise</li>
-                <li>Over <strong>25%</strong> of the Fortune 500 use ag-Grid Enterprise</li>
+            <ul style="padding-left: 102px">
+                <li>Dedicated support and enterprise features</li>
+                <li>Used by over <strong>1,500</strong> companies</li>
+                <li>Used by over <strong>25%</strong> of the Fortune 500</li>
             </ul>
         </div>
     </div>
@@ -46,7 +52,6 @@
 </section>
 <section class="features">
     <h2>Packed with features that your users need</h2>
-    <quote>To say it's feature-rich is to say nothing</quote>
     <div class="container">
         <div>
             <h3>Rich UI controls</h3>
@@ -112,45 +117,51 @@
         </div>
         <div>
             <div class="grid-example">
-                <h4>100 000 records and 20 columns</h4>
+                <h4 style="text-align: center">Stress-test our react grid with <span style="text-decoration: underline">100 000</span>
+                    records and 20 columns</h4>
                 <div class="grid-container" style="height:500px;"></div>
             </div>
         </div>
     </div>
 </section>
-<section class="api" style="padding-bottom: 50px;">
+<section class="api" style="padding-bottom: 120px;">
     <h2>API is designed with a developer in mind</h2>
     <div class="container">
-        <div>
+        <div class="grid-example">
+            <h4 style="text-align: center">Click operation on right and see the API in action</h4>
             <div class="grid-container ag-theme-balham-dark" style="height: 100%;"></div>
         </div>
         <div>
-            <h4>Say something about API</h4>
-            <p style="line-height: 25px; margin: 15px 0; ">
-                ag-Grid can process over 150,000 updates per second. Together with the latest browsers and ag-Grid’s
-                cutting-edge algorithms.
-            </p>
-            <div class="api-code" style="font-size: 14px; padding: 12px; background: #f8f8f8; display: flex;  align-items: center; min-height: 50px; border: 1px solid #e3e2e2;">
+            <h4 style="color: transparent">.</h4>
+            <div class="api-code" style="margin-bottom: 30px; font-size: 14px; padding: 10px 20px; background: #f8f8f8; display: flex;  align-items: center; min-height: 90px; border: 1px solid #e3e2e2;">
                 <pre></pre>
             </div>
-            <h4>Click operation to see API in action:</h4>
-            <ul class="api-operations">
-                <li data-action="sort-by-one-column"><a>Sort by one column (Country)</a></li>
-                <li data-action="sort-by-two-columns"><a>Sort by two columns (Country & Year)</a></li>
-                <li data-action="clear-sorting"><a>Clear sorting</a></li>
-                <li data-action="set-filter-by-one-column"><a>Filter by one column (United States)</a></li>
-                <li data-action="remove-filter"><a>Clear filtering</a></li>
-                <li data-action="group-by-three-columns">
-                    <a>
-                        Group by three columns (Country, Year & Sport)
-                    </a>
-                </li>
-                <li data-action="expand-top-level-rows"><a>Expand top level rows</a></li>
-                <li data-action="collapse-top-level-rows"><a>Collapse top level rows</a></li>
-                <li data-action="remove-grouping"><a>Remove grouping</a></li>
-                <li data-action="set-row-height"><a>Set row height</a></li>
-                <li data-action="reset-row-height"><a>Reset row height to default</a></li>
-            </ul>
+            <div style="position: relative;">
+                <img src="assets/images/click-these.jpg" style="width: 170px;position: absolute;right: 20px;top: 20px;">
+                <ul class="api-operations">
+                    <li data-action="sort-by-one-column"><a>Sort by one column (Country)</a></li>
+                    <li data-action="sort-by-two-columns"><a>Sort by two columns (Country & Year)</a></li>
+                    <li data-action="clear-sorting"><a>Clear sorting</a></li>
+                </ul>
+                <ul class="api-operations">
+                    <li data-action="set-filter-by-one-column"><a>Filter by one column (United States)</a></li>
+                    <li data-action="remove-filter"><a>Clear filtering</a></li>
+                </ul>
+                <ul class="api-operations">
+                    <li data-action="group-by-three-columns">
+                        <a>
+                            Group by three columns (Country, Year & Sport)
+                        </a>
+                    </li>
+                    <li data-action="expand-top-level-rows"><a>Expand top level rows</a></li>
+                    <li data-action="collapse-top-level-rows"><a>Collapse top level rows</a></li>
+                    <li data-action="remove-grouping"><a>Remove grouping</a></li>
+                </ul>
+                <ul class="api-operations">
+                    <li data-action="set-row-height"><a>Set row height</a></li>
+                    <li data-action="reset-row-height"><a>Reset row height to default</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>

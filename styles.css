@@ -29,7 +29,7 @@ body {
 }
 
 .head {
-    padding: 30px 0 50px;
+    padding: 30px 0 40px;
     background: linear-gradient(to top left, #0084e7, #00407f);
 }
 
@@ -54,10 +54,16 @@ h1, h2 {
 }
 
 h1 {
-    font-size: 50px;
+    font-size: 60px;
+    line-height: 53px;
     font-weight: 500;
-    padding: 30px 0;
+    padding: 30px 0 50px;
     color: white;
+}
+
+h1 span:nth-child(3) {
+    font-size: 32px;
+    color: #e7c9c9;
 }
 
 h2 {
@@ -108,7 +114,8 @@ h4 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .5) url("assets/images/play-button.png") no-repeat center center;
+    background-size: 75px;
 }
 
 .features .img-container:hover:after {
@@ -150,18 +157,28 @@ h4 {
 
 .api .container {
     display: grid;
-    grid-template-columns: auto 400px;
-    column-gap: 50px;
+    grid-template-columns: auto 500px;
+    column-gap: 40px;
     margin: 0 auto;
 }
 
 .api-operations {
     list-style: none;
+    margin-top: 15px;
 }
 
 .api-operations li {
     cursor: pointer;
     line-height: 25px;
+    padding-left: 20px;
+}
+
+.api-operations li:before {
+    content: "\f0a4";
+    font-family: FontAwesome;
+    display: inline-block;
+    margin-left: -20px;
+    width: 25px;
 }
 
 .api-operations li:hover {
@@ -229,6 +246,7 @@ footer .copy span:nth-child(2) {
     border: 1px solid #cccbcb;
     text-transform: uppercase;
     font-weight: 700;
+    padding: 20px;
 }
 
 .btn-primary:hover {
