@@ -100,11 +100,13 @@ h4 {
 
 .features .container img {
     width: 100%;
-    height: 300px;
+    height: 100%;
 }
 
 .features .img-container {
     position: relative;
+    border: 1px solid #dbdada;
+    height: 300px;
 }
 
 .features .img-container:after {

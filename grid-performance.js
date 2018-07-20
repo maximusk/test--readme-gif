@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     new agGrid.Grid(gridDiv, gridOptions);
     createData();
-
-    gridDiv.className = 'ag-theme-balham';
 });
 
 let gridDiv;
@@ -242,8 +240,9 @@ const gridOptions = {
     enableRangeSelection: true
 };
 
+const rowCount = 100000;
+
 function createData() {
-    const rowCount = 100000;
     let row = 0;
     let data = [];
 
@@ -303,12 +302,12 @@ function createRowItem(row) {
         bought: booleanValues[row % booleanValues.length]
     };
 
-    rowItem.bankBalance = (Math.round(pseudoRandom() * 100000)) - 3000;
+    rowItem.bankBalance = (Math.round(pseudoRandom() * rowCount)) - 3000;
     rowItem.rating = (Math.round(pseudoRandom() * 5));
 
     let totalWinnings = 0;
     months.forEach(function (month) {
-        const value = (Math.round(pseudoRandom() * 100000)) - 20;
+        const value = (Math.round(pseudoRandom() * rowCount)) - 20;
         rowItem[month.toLocaleLowerCase()] = value;
         totalWinnings += value;
     });
