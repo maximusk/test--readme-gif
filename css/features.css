@@ -1,0 +1,75 @@
+.features-grid img.static {
+    display: none;
+}
+
+.features-grid img.dynamic, .features-grid img.static {
+    width: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+    .features-grid .img-container {
+        display: none;
+    }
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 40px;
+    margin: 0 auto;
+}
+
+@media only screen and (min-width: 900px) {
+    .features-grid {
+        grid-template-columns: repeat(2, minmax(350px, 550px));
+        grid-row-gap: 20px;
+    }
+
+    .features-grid img.static {
+        display: inline;
+    }
+
+    .features .img-container {
+        position: relative;
+        border: 1px solid #dbdada;
+    }
+
+    .features .img-container:after {
+        position: absolute;
+        content: '';
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, .5) url("assets/images/play-button.png") no-repeat center center;
+        background-size: 75px;
+    }
+
+    .features .img-container:hover:after {
+        background: transparent;
+    }
+
+    .features .container .img-container img:last-child {
+        display: none;
+    }
+
+    .features .container .img-container:hover img:last-child {
+        display: block;
+    }
+
+    .features .container .img-contpainer:hover img:first-child {
+        display: none;
+    }
+}
+
+.features-grid article {
+    line-height: 25px;
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 500px) {
+    .features-grid article {
+        margin-top: 0;
+    }
+}
