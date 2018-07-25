@@ -347,7 +347,7 @@ function ratingRendererGeneral(value, forFilter) {
     let result = '<span>';
     for (let i = 0; i < 5; i++) {
         if (value > i) {
-            result += '<img src="assets/images/star.svg" class="star" width=12 height=12 />';
+            result += '<img src="../assets/images/star.svg" class="star" width=12 height=12 />';
         }
     }
     if (forFilter && value === 0) {

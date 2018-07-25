@@ -2,20 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link type="text/css" rel="stylesheet" href="./styles.css">
+    <title>ag-Grid: Datagrid packed with features that your users need with the performance you expect.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
     <link rel="shortcut icon" href="assets/favicons/favicon.ico">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <script src="js/ag-grid-enterprise@18.1.1_dist_ag-grid-enterprise.js"></script>
+
+    <script src="js/ag-grid-enterprise@18.1.1.js" defer></script>
+    <script src="js/grid-performance.js" type="module" defer></script>
+    <script src="js/grid-api.js" type="module" defer></script>
+    <script src="https://platform.twitter.com/widgets.js" defer></script>
+    <script src="https://buttons.github.io/buttons.js" defer></script>
+
+    <link type="text/css" rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="css/ag-grid@18.1.1.css">
     <link rel="stylesheet" href="css/ag-theme-balham@18.1.1.css">
-    <script src="grid-performance.js" type="module"></script>
-    <script src="grid-api.js" type="module"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 </head>
 <body>
 <section class="head">
@@ -23,148 +29,151 @@
     <h1>
         <span>The best React Grid in the world</span>
         <br>
-        <span>Trusted by the Community, built for Enterprise</span>
+        <span class="sub-header">Trusted by the Community,</span>
+        <br class="small-width-conditional-break">
+        <span class="sub-header">built for Enterprise</span>
     </h1>
-    <div class="container" style="width: 1000px; font-size: 17px;">
+    <div class="container">
         <div>
             <h3>Community Edition</h3>
-            <!--todo-->
-            <ul style="padding-left: 90px;">
-                <li>Open-sourced <strong style="font-size: 25px;">free</strong> version licensed under MIT</li>
-                <li>Over <strong style="font-size: 25px;">150,000</strong> downloads per month</li>
-                <li>Over <strong style="font-size: 25px;">2 million</strong> total downloads</li>
+            <ul>
+                <li>Open-sourced <strong>free</strong> version licensed under MIT</li>
+                <li>Over <strong>150,000</strong> downloads per month</li>
+                <li>Over <strong>2 million</strong> total downloads</li>
             </ul>
         </div>
         <div>
             <h3>Enterprise Edition</h3>
-            <!--todo-->
-            <ul style="padding-left: 102px">
-                <li>Dedicated support and enterprise features</li>
-                <li>Used by over <strong style="font-size: 25px;">1,500</strong> companies</li>
-                <li>Used by over <strong style="font-size: 25px;">25%</strong> of the Fortune 500</li>
+            <ul>
+                <li>Dedicated <strong>support</strong> and enterprise features</li>
+                <li>Used by over <strong>1,500</strong> companies</li>
+                <li>Used by over <strong>25%</strong> of the Fortune 500</li>
             </ul>
         </div>
     </div>
     <div class="btn-wrapper">
-        <a class="btn btn-primary btn-alt" href="https://www.ag-grid.com/react-getting-started">Get started in 5
-            minutes</a>
+        <a class="btn btn-primary btn-alt" href="https://www.ag-grid.com/react-getting-started">
+            Get started in 5 minutes
+        </a>
     </div>
 </section>
 <section class="features">
     <h2>Packed with features that your users need</h2>
     <div class="container">
-        <div>
-            <h3>Rich UI controls</h3>
-            <div class="centered img-container">
-                <img class="static" src="assets/images/rich-ui.jpg">
-                <img class="dynamic" src="assets/images/rich-ui.gif">
+        <div class="features-grid">
+            <div>
+                <h3>Rows & Columns Interactions</h3>
+                <div class="centered img-container">
+                    <img class="static" src="assets/images/row-column-interactions.jpg">
+                    <img class="dynamic" src="assets/images/row-column-interactions.gif">
+                </div>
+                <article>
+                    Our react grid provides rich inline editing experience so your users can update the information they
+                    need with
+                    fewer clicks. To make the grid editable use one of the provided cell editors or easily create your
+                    own
+                    to suit your business
+                    needs.
+                    Need to change the order of the displayed records or columns in the data grid? Easy! Use the
+                    familiar
+                    Drag & Drop
+                    functionality to perform those actions in our data grid.
+                </article>
             </div>
-            <article>
-                GUI is still the preferred way for interaction with widgets for your users. That's why we've put a lot
-                of
-                emphasis on the UI controls to make the best react grid in the world.
-                Our grid implements customizable column and context menus which is a must-have for modern react data
-                grids. They provide a convenient way to filter and copy/paste records, resize and pin columns and
-                perform other UI actions. The react grid example above gives a short demo of that functionality.
-            </article>
-        </div>
-        <div>
-            <h3>Rows & Columns Interactions</h3>
-            <div class="centered img-container">
-                <img class="static" src="assets/images/row-column-interactions.jpg">
-                <img class="dynamic" src="assets/images/row-column-interactions.gif">
+            <div>
+                <h3>Grouping / Aggregation</h3>
+                <div class="centered img-container">
+                    <img class="static" src="assets/images/aggregation.jpg">
+                    <img class="dynamic" src="assets/images/aggregation.gif">
+                </div>
+                <article>
+                    Being able to quickly analyze data can help your users make better business decisions.
+                    Our react grid makes it easy to summarize, analyze, explore, and present any data in just a few
+                    clicks.
+                    That's achieved through the use of the grouping/aggregation and pivoting functionality.
+                    We've got everything you'd expect from a table grid: grouping by specific columns, applying various
+                    aggregate functions, having row and column totals and others.
+                </article>
             </div>
-            <article>
-                Our react grid provides rich inline editing experience so your users can update the information they
-                need with
-                fewer clicks. To make the grid editable use one of the provided cell editors or easily create your own
-                to suit your business
-                needs.
-                Need to change the order of the displayed records or columns in the data grid? Easy! Use the familiar
-                Drag & Drop
-                functionality to perform those actions in our data grid.
-            </article>
-        </div>
-        <div>
-            <h3>Grouping / Aggregation</h3>
-            <div class="centered img-container">
-                <img class="static" src="assets/images/aggregation.jpg">
-                <img class="dynamic" src="assets/images/aggregation.gif">
+            <div>
+                <h3>Rich UI controls</h3>
+                <div class="centered img-container">
+                    <img class="static" src="assets/images/rich-ui.jpg">
+                    <img class="dynamic" src="assets/images/rich-ui.gif">
+                </div>
+                <article>
+                    GUI is still the preferred way for interaction with widgets for your users. That's why we've put a
+                    lot
+                    of
+                    emphasis on the UI controls to make the best react grid in the world.
+                    Our grid implements customizable column and context menus which is a must-have for modern react data
+                    grids. They provide a convenient way to filter and copy/paste records, resize and pin columns and
+                    perform other UI actions. The react grid example above gives a short demo of that functionality.
+                </article>
             </div>
-            <article>
-                Being able to quickly analyze data can help your users make better business decisions.
-                Our react grid makes it easy to summarize, analyze, explore, and present any data in just a few clicks.
-                That's achieved through the use of the grouping/aggregation and pivoting functionality.
-                We've got everything you'd expect from a table grid: grouping by specific columns, applying various
-                aggregate functions, having row and column totals and others.
-            </article>
-        </div>
-        <div>
-            <h3>Tree Data</h3>
-            <div class="centered img-container">
-                <img class="static" src="assets/images/tree-view.jpg">
-                <img class="dynamic" src="assets/images/tree-view.gif">
+            <div>
+                <h3>Tree Data</h3>
+                <div class="centered img-container">
+                    <img class="static" src="assets/images/tree-view.jpg">
+                    <img class="dynamic" src="assets/images/tree-view.gif">
+                </div>
+                <article>
+                    Often business data has hierarchical relationships between entities.
+                    To make it easy to work this kind of information, our react data
+                    grid implements the tree view specifically designed to display
+                    parent / child relationships between entities. The tree view implements a convenient mechanism to
+                    expand
+                    and
+                    collapse groups in one click. And when you need to perform some analysis, the grid has
+                    data aggregation and filtering functionality available for you even in the tree view.
+                </article>
             </div>
-            <article>
-                Often business data has hierarchical relationships between entities.
-                To make it easy to work this kind of information, our react data
-                grid implements the tree view specifically designed to display
-                parent / child relationships between entities. The tree view implements a convenient mechanism to expand
-                and
-                collapse groups in one click. And when you need to perform some analysis, the grid has
-                data aggregation and filtering functionality available for you even in the tree view.
-            </article>
         </div>
     </div>
     <div class="btn-wrapper">
         <a class="btn btn-primary" href="https://www.ag-grid.com/features-overview">Discover all features</a>
     </div>
 </section>
-<!--make all sections with padding-->
-<section class="performance" style="padding: 20px 0 75px;">
+<section class="performance">
     <h2>Delivers performance you expect</h2>
-    <!--make container with dimensions for all sections-->
     <div class="container">
-        <div>
+        <div class="description">
             <h4>It's ridiculously fast</h4>
-            <p style="line-height: 25px; margin: 15px 0;">
+            <p>
                 Using our react grid you can work with large amounts of data and never worry about performance issues.
                 Right from the start we designed our datagrid to deliver the performance required by modern day
                 enterprise applications. The grid can process over 100,000 updates per second and performs smoothly with
                 <strong>millions</strong> of records. Usually it is more than enough for business critical applications.
             </p>
             <h4>And we don't stop there</h4>
-            <p style="line-height: 25px; margin: 15px 0;">
+            <p>
                 We understand the modern need for speed, so we constantly
                 working to combine the latest browsers advances and
                 cutting-edge algorithms in our grid to justify the reputation of the best react datagrid in the
                 world.
             </p>
         </div>
-        <div>
-            <div class="grid-example">
-                <h4 style="text-align: center">Stress-test our react grid with
-                    <span style="text-decoration: underline">100 000</span>
-                    records and 20 columns</h4>
-                <div class="grid-container ag-theme-balham" style="height:500px;"></div>
-            </div>
+        <div class="grid-example">
+            <h4>Stress-test our react grid with
+                <span class="underlined">100 000</span>
+                records and 20 columns</h4>
+            <div class="grid-container ag-theme-balham"></div>
         </div>
     </div>
 </section>
-<section class="api" style="padding-bottom: 120px;">
+<section class="api">
     <h2>Seamless integration, abound customization opportunities</h2>
     <div class="container">
         <div class="grid-example">
-            <h4 style="text-align: center">Click operation on right and see the API in action</h4>
-            <div class="grid-container ag-theme-balham-dark" style="height: 100%;"></div>
+            <h4>Click operation on right and see the API in action</h4>
+            <div class="grid-container ag-theme-balham-dark"></div>
         </div>
-        <div>
-            <h4 style="color: transparent">.</h4>
-            <div class="api-code" style="margin-bottom: 30px; font-size: 14px; padding: 10px 20px; background: #f8f8f8; display: flex;  align-items: center; min-height: 90px; border: 1px solid #e3e2e2;">
+        <div class="api-methods-container">
+            <div class="api-code">
                 <pre></pre>
             </div>
-            <div style="position: relative;">
-                <img src="assets/images/click-these.jpg" style="width: 170px;position: absolute;right: 20px;top: 20px;">
+            <div>
+                <img src="assets/images/click-these.jpg">
                 <ul class="api-operations">
                     <li data-action="sort-by-one-column"><a>Sort by one column (Country)</a></li>
                     <li data-action="sort-by-two-columns"><a>Sort by two columns (Country & Year)</a></li>
@@ -176,9 +185,7 @@
                 </ul>
                 <ul class="api-operations">
                     <li data-action="group-by-three-columns">
-                        <a>
-                            Group by three columns (Country, Year & Sport)
-                        </a>
+                        <a>Group by three columns (Country, Year & Sport)</a>
                     </li>
                     <li data-action="expand-top-level-rows"><a>Expand top level rows</a></li>
                     <li data-action="collapse-top-level-rows"><a>Collapse top level rows</a></li>
@@ -194,33 +201,35 @@
 </section>
 <section class="closing-argument">
     <div class="container">
-        <h2 style="background: none; color: white; width: 800px; margin: 0 auto; font-weight: 500;">
+        <h2>
             Community Edition is free. Forever. <br> Ready to give it a try?
         </h2>
-        <div class="btn-wrapper" style="padding-top: 0;">
-            <a class="btn btn-primary btn-alt" href="https://www.ag-grid.com/react-getting-started">Get started in 5
-                minutes</a>
+        <div class="btn-wrapper">
+            <a class="btn btn-primary btn-alt" href="https://www.ag-grid.com/react-getting-started">
+                Get started in 5 minutes
+            </a>
         </div>
     </div>
 </section>
 <footer>
-    <div>
-        <ul style="display: flex; list-style: none; margin-bottom: 10px;">
-            <li>
-                <a class="github-button" href="https://github.com/ag-grid/ag-grid" data-show-count="true" aria-label="Star ag-grid/ag-grid on GitHub">Star</a>
-            </li>
-            <li style="margin-left: 15px">
-                <a href="https://twitter.com/ceolter?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow
-                    @ceolter</a></li>
-        </ul>
-    </div>
-    <div class="copy">
-        <span>ag-Grid Limited registered in the United Kingdom. Company No. 07318192.</span>
-        <span>&copy; ag-Grid Ltd. 2015-2018</span>
+    <div class="container">
+        <div>
+            <ul>
+                <li>
+                    <a class="github-button" href="https://github.com/ag-grid/ag-grid" data-show-count="true" aria-label="Star ag-grid/ag-grid on GitHub">Star</a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/ceolter?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">
+                        Follow @ceolter
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="copy">
+            <span>ag-Grid Limited registered in the United Kingdom. Company No. 07318192.</span>
+            <span>&copy; ag-Grid Ltd. 2015-2018</span>
+        </div>
     </div>
 </footer>
-
-<script async defer src="https://platform.twitter.com/widgets.js"></script>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>
