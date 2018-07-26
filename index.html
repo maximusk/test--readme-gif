@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ag-Grid: Datagrid packed with features that your users need with the performance you expect.</title>
+    <title>React Grid - the fastest and most feature-rich grid component from ag-Grid</title>
+    <meta name="description" content="ag-Grid is feature rich datagrid designed for the major JavaScript Frameworks.
+    Version 17 is out now. Easily integrate into your application to deliver filtering, grouping, aggregation, pivoting
+    and much more with the performance that your users expect. Our Community version is free and open source or take a
+    2 month trial of ag-Grid Enterprise.">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
@@ -10,8 +15,8 @@
     <link rel="shortcut icon" href="assets/favicons/favicon.ico">
 
     <script src="js/ag-grid-enterprise@18.1.1.js" defer></script>
-    <script src="js/grid-performance.js" type="module" defer></script>
-    <script src="js/grid-api.js" type="module" defer></script>
+    <script src="js/grid-performance.js" type="module"></script>
+    <script src="js/grid-api.js" type="module"></script>
     <script src="https://platform.twitter.com/widgets.js" defer></script>
     <script src="https://buttons.github.io/buttons.js" defer></script>
 
@@ -24,8 +29,12 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 </head>
 <body>
-<section class="head">
-    <div class="logo"><a href="/" title="The Best HTML 5 Grid in the World">ag-Grid</a></div>
+<header class="head">
+    <div class="logo">
+        <a href="/" title="The Best React Grid in the World">
+            <img src="assets/images/react-grid.svg" alt="The Best React Grid in the World">
+        </a>
+    </div>
     <h1>
         <span>The best React Grid in the world</span>
         <br>
@@ -56,76 +65,91 @@
             Get started in 5 minutes
         </a>
     </div>
-</section>
+</header>
 <section class="features">
     <h2>Packed with features that your users need</h2>
     <div class="container">
         <div class="features-grid">
             <div>
-                <h3>Rows & Columns Interactions</h3>
-                <div class="centered img-container">
-                    <img class="static" src="assets/images/row-column-interactions.jpg">
-                    <img class="dynamic" src="assets/images/row-column-interactions.gif">
-                </div>
                 <article>
-                    Our react grid provides rich inline editing experience so your users can update the information they
-                    need with
-                    fewer clicks. To make the grid editable use one of the provided cell editors or easily create your
-                    own
-                    to suit your business
-                    needs.
-                    Need to change the order of the displayed records or columns in the data grid? Easy! Use the
-                    familiar
-                    Drag & Drop
-                    functionality to perform those actions in our data grid.
+                    <h3>Rows & Columns Interactions</h3>
+                    <div class="centered img-container">
+                        <img class="static" alt="Rows & Columns Interaction demo" src="assets/images/row-column-interactions-demo.jpg">
+                        <img class="dynamic" alt="Rows & Columns Interaction demo" src="assets/images/row-column-interactions-demo.gif">
+                    </div>
+                    <p>
+                        Our react grid provides rich inline editing experience so your users can update the information
+                        they
+                        need with
+                        fewer clicks. To make the grid editable use one of the provided cell editors or easily create
+                        your
+                        own
+                        to suit your business
+                        needs.
+                        Need to change the order of the displayed records or columns in the data grid? Easy! Use the
+                        familiar
+                        Drag & Drop
+                        functionality to perform those actions in our data grid.
+                    </p>
                 </article>
             </div>
             <div>
-                <h3>Grouping / Aggregation</h3>
-                <div class="centered img-container">
-                    <img class="static" src="assets/images/aggregation.jpg">
-                    <img class="dynamic" src="assets/images/aggregation.gif">
-                </div>
                 <article>
-                    Being able to quickly analyze data can help your users make better business decisions.
-                    Our react grid makes it easy to summarize, analyze, explore, and present any data in just a few
-                    clicks.
-                    That's achieved through the use of the grouping/aggregation and pivoting functionality.
-                    We've got everything you'd expect from a table grid: grouping by specific columns, applying various
-                    aggregate functions, having row and column totals and others.
+                    <h3>Grouping / Aggregation</h3>
+                    <div class="centered img-container">
+                        <img alt="Grouping & Aggregation demo" class="static" src="assets/images/grouping-aggregation-demo.jpg">
+                        <img alt="Grouping & Aggregation demo" class="dynamic" src="assets/images/grouping-aggregation-demo.gif">
+                    </div>
+                    <p>
+                        Being able to quickly analyze data can help your users make better business decisions.
+                        Our react grid makes it easy to summarize, analyze, explore, and present any data in just a few
+                        clicks.
+                        That's achieved through the use of the grouping/aggregation and pivoting functionality.
+                        We've got everything you'd expect from a table grid: grouping by specific columns, applying
+                        various
+                        aggregate functions, having row and column totals and others.
+                    </p>
                 </article>
             </div>
             <div>
-                <h3>Rich UI controls</h3>
-                <div class="centered img-container">
-                    <img class="static" src="assets/images/rich-ui.jpg">
-                    <img class="dynamic" src="assets/images/rich-ui.gif">
-                </div>
                 <article>
-                    GUI is still the preferred way for interaction with widgets for your users. That's why we've put a
-                    lot
-                    of
-                    emphasis on the UI controls to make the best react grid in the world.
-                    Our grid implements customizable column and context menus which is a must-have for modern react data
-                    grids. They provide a convenient way to filter and copy/paste records, resize and pin columns and
-                    perform other UI actions. The react grid example above gives a short demo of that functionality.
+                    <h3>Rich UI controls</h3>
+                    <div class="centered img-container">
+                        <img alt="Rich UI controls demo" class="static" src="assets/images/rich-ui-controls-demo.jpg">
+                        <img alt="Rich UI controls demo" class="dynamic" src="assets/images/rich-ui-controls-demo.gif">
+                    </div>
+                    <p>
+                        GUI is still the preferred way for interaction with widgets for your users. That's why we've put
+                        a
+                        lot
+                        of
+                        emphasis on the UI controls to make the best react grid in the world.
+                        Our grid implements customizable column and context menus which is a must-have for modern react
+                        data
+                        grids. They provide a convenient way to filter and copy/paste records, resize and pin columns
+                        and
+                        perform other UI actions. The react grid example above gives a short demo of that functionality.
+                    </p>
                 </article>
             </div>
             <div>
-                <h3>Tree Data</h3>
-                <div class="centered img-container">
-                    <img class="static" src="assets/images/tree-view.jpg">
-                    <img class="dynamic" src="assets/images/tree-view.gif">
-                </div>
                 <article>
-                    Often business data has hierarchical relationships between entities.
-                    To make it easy to work this kind of information, our react data
-                    grid implements the tree view specifically designed to display
-                    parent / child relationships between entities. The tree view implements a convenient mechanism to
-                    expand
-                    and
-                    collapse groups in one click. And when you need to perform some analysis, the grid has
-                    data aggregation and filtering functionality available for you even in the tree view.
+                    <h3>Tree View</h3>
+                    <div class="centered img-container">
+                        <img alt="Tree View demo" class="static" src="assets/images/tree-view-demo.jpg">
+                        <img alt="Tree View demo" class="dynamic" src="assets/images/tree-view-demo.gif">
+                    </div>
+                    <p>
+                        Often business data has hierarchical relationships between entities.
+                        To make it easy to work this kind of information, our react data
+                        grid implements the tree view specifically designed to display
+                        parent / child relationships between entities. The tree view implements a convenient mechanism
+                        to
+                        expand
+                        and
+                        collapse groups in one click. And when you need to perform some analysis, the grid has
+                        data aggregation and filtering functionality available for you even in the tree view.
+                    </p>
                 </article>
             </div>
         </div>
@@ -173,7 +197,7 @@
                 <pre></pre>
             </div>
             <div>
-                <img src="assets/images/click-these.jpg">
+                <img alt="Prompt to click on API links" src="assets/images/prompt-to-click-on-api-links.jpg">
                 <ul class="api-operations">
                     <li data-action="sort-by-one-column"><a>Sort by one column (Country)</a></li>
                     <li data-action="sort-by-two-columns"><a>Sort by two columns (Country & Year)</a></li>

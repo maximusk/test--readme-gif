@@ -13,18 +13,18 @@ body {
     color: #424a4f;
 }
 
-section {
+section, header {
     padding-bottom: 5vw;
 }
 
 @media only screen and (max-width: 500px) {
-    section {
+    section, header {
         padding-bottom: 20px;
     }
 }
 
 @media only screen and (min-width: 1200px) {
-    section {
+    section, header {
         padding-bottom: 60px;
     }
 }
@@ -37,7 +37,7 @@ footer > .container {
 }
 
 @media only screen and (max-width: 1200px) {
-    section > .container {
+    section > .container, header > .container {
         padding: 0 3vw;
     }
 }
